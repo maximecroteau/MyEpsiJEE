@@ -10,3 +10,7 @@ fr.epsi.myEpsi/fr.epsi.myEpsi.iml
 fr.epsi.myEpsi/.settings
 fr.epsi.myEpsi/.classpath
 fr.epsi.myEpsi/.project
+/build/
+.settings
+.classpath
+.project
