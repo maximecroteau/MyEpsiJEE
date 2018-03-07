@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.dao.IAnnonceDao;
-import fr.epsi.myEpsi.dao.hsqlImpl.AnnonceDao;
+import fr.epsi.myEpsi.dao.IOfferDao;
+import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 
 /**
  * Servlet implementation class getAnnoncesServlet
@@ -33,7 +33,7 @@ public class getAnnoncesServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("LOGIN");
-        IAnnonceDao annonceDao = new AnnonceDao();
+        IOfferDao annonceDao = new OfferDao();
         List<Offer> myOffers = annonceDao.getAnnonces(login);
         //Parcourir les annonces de l'utilisateur
         for(Offer offer : myOffers) {

@@ -1,6 +1,6 @@
 package fr.epsi.myEpsi.jmx;
 
-public interface PremierMBean {
+public interface FirstMBean {
 
     public String getNom();
     public int getValeur();

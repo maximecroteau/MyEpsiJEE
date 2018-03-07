@@ -1,8 +1,8 @@
 package fr.epsi.myEpsi.jmx;
 
-public class Premier implements PremierMBean {
+public class First implements FirstMBean {
 
-    private static String nom = "PremierMBean";
+    private static String nom = "FirstMBean";
     private int valeur = 100;
 
     public String getNom() {
@@ -23,7 +23,7 @@ public class Premier implements PremierMBean {
 
     }
 
-    public Premier() {
+    public First() {
 
     }
 }

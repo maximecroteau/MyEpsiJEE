@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
-import fr.epsi.myEpsi.dao.IAnnonceDao;
+import fr.epsi.myEpsi.dao.IOfferDao;
 import fr.epsi.myEpsi.dao.IUserDao;
-import fr.epsi.myEpsi.dao.hsqlImpl.AnnonceDao;
+import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
 /**
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
 		IUserDao userDao = new UserDao();
 		if (userDao.checkLogin(user)) {
-			IAnnonceDao annonceDao = new AnnonceDao();
+			IOfferDao annonceDao = new OfferDao();
 			List<Offer> myOffers = annonceDao.getAnnonces(login);
 			request.setAttribute("ANNONCES", myOffers);
 			request.setAttribute("USER", UserDao.getUserById(login));

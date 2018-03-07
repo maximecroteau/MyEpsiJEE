@@ -18,7 +18,7 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import fr.epsi.myEpsi.jmx.Premier;
+import fr.epsi.myEpsi.jmx.First;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -60,9 +60,9 @@ public class StartupListener implements ServletContextListener,
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = null;
         try {
-            name = new ObjectName("fr.epsi.myEpsi.jmx:type=PremierMBean");
+            name = new ObjectName("fr.epsi.myEpsi.jmx:type=FirstMBean");
 
-            Premier mbean = new Premier();
+            First mbean = new First();
 
             mbs.registerMBean(mbean, name);
 

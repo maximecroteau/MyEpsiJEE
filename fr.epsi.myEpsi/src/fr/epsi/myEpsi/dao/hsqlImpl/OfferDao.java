@@ -11,9 +11,9 @@ import fr.epsi.myEpsi.Constants;
 
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.Status;
-import fr.epsi.myEpsi.dao.IAnnonceDao;
+import fr.epsi.myEpsi.dao.IOfferDao;
 
-public class AnnonceDao implements IAnnonceDao {
+public class OfferDao implements IOfferDao {
 
     @Override
     public List<Offer> getAnnonces(String loginId){
