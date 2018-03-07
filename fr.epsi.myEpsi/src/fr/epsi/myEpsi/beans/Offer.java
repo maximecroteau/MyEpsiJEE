@@ -15,24 +15,7 @@ public class Offer {
 	private Date modification;
 	private User acheteur;
 	private Date achat;
-
-	@Override
-	public String toString() {
-		return "Offer{" +
-				"id=" + id +
-				", vendeur=" + vendeur +
-				", titre='" + titre + '\'' +
-				", description='" + description + '\'' +
-				", statut=" + statut +
-				", prix=" + prix +
-				", nbVues=" + nbVues +
-				", creation=" + creation +
-				", modification=" + modification +
-				", acheteur=" + acheteur +
-				", achat=" + achat +
-				'}';
-	}
-
+	
 	public Offer() {
 		statut = Status.TEMPORAIRE;
 	}
@@ -124,6 +107,5 @@ public class Offer {
 	public void setAchat(Date achat) {
 		this.achat = achat;
 	}
-	
 	
 }

@@ -1,4 +1,4 @@
-package fr.epsi.myEpsi.servlet;
+package fr.epsi.myEpsi.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,9 +13,10 @@ import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.dao.IOfferDao;
 import fr.epsi.myEpsi.dao.IUserDao;
+//import fr.epsi.myEpsi.dao.mockImpl.AnnonceDao;
+//import fr.epsi.myEpsi.dao.mockImpl.UtilisateurDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
-
 /**
  * Servlet implementation class LoginServlet
  */
@@ -37,17 +38,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("LOGIN");
 		String password = request.getParameter("PWD");
+		
 		User user = new User();
 		user.setId(login);
 		user.setPassword(password);
-
+		
 		IUserDao userDao = new UserDao();
 		if (userDao.checkLogin(user)) {
-			IOfferDao annonceDao = new OfferDao();
-			List<Offer> myOffers = annonceDao.getAnnonces(login);
-			request.setAttribute("ANNONCES", myOffers);
+			IOfferDao offerDao = new OfferDao();
+			List<Offer> myOffers = offerDao.getOffers(login);
+			request.setAttribute("OFFERS", myOffers);
 			request.setAttribute("USER", UserDao.getUserById(login));
-			request.getRequestDispatcher("annonces.jsp").forward(request, response);
+			request.getRequestDispatcher("offers.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("login.html").forward(request, response);
 		}

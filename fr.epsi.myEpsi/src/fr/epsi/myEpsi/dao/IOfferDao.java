@@ -5,5 +5,6 @@ import java.util.List;
 import fr.epsi.myEpsi.beans.Offer;
 
 public interface IOfferDao {
-	List<Offer> getAnnonces(String loginId);
+
+	List<Offer> getOffers(String loginId);
 }
