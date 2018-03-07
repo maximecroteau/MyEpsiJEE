@@ -4,4 +4,6 @@
 # Log file
 *.log
 
-/.idea
+fr.epsi.myEpsi/.idea
+fr.epsi.myEpsi/out
+fr.epsi.myEpsi/fr.epsi.myEpsi.iml
