@@ -4,9 +4,15 @@
 # Log file
 *.log
 
+# IntelliJ files
 fr.epsi.myEpsi/.idea
 fr.epsi.myEpsi/out
 fr.epsi.myEpsi/fr.epsi.myEpsi.iml
+
+# Eclipse files
 fr.epsi.myEpsi/.settings
 fr.epsi.myEpsi/.classpath
 fr.epsi.myEpsi/.project
+
+# Tmp files
+~*
