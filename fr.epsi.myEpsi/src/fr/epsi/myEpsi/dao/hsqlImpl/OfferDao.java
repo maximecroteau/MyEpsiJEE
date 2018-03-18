@@ -22,7 +22,7 @@ public class OfferDao implements IOfferDao {
 		
 		for (Offer offer : getAllOffers()) {
 			// Vérifie si on peut la voir
-			if (offer.getStatut() == Status.PUBLIE) {
+			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId() == loginId) {
 				myOffers.add(offer);
 			}
 		}

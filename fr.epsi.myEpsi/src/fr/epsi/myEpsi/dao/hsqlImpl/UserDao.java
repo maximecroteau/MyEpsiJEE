@@ -8,22 +8,74 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import fr.epsi.myEpsi.listeners.StartupListner;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import fr.epsi.myEpsi.Constants;
+import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.dao.IUserDao;
 
 public class UserDao implements IUserDao {
-
+	private static final Logger logger = LogManager.getLogger(UserDao.class);
+	
+	private static void logInsert(boolean succes, String id, String pwd, boolean admin, String nom, SQLException e) {
+		if(logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if(succes) {
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append ("Échec de la requête suivante : ");
+			}
+			toDebug.append ("INSERT INTO UTILISATEURS (ID,PASSWORD,ISADMINISTRATOR,NAME)");
+			toDebug.append ("VALUES (" + id + "," + pwd + "," + admin + "," + nom + ")");
+			if(!succes) {
+				toDebug.append (e);
+			}
+			
+	    	logger.debug(toDebug);
+	    }
+	}
+	
+	private static void logSelect(boolean succes, String[] where, String[] values, SQLException e) {
+		if(logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if(succes) {
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append ("Échec de la requête suivante : ");
+			}
+			toDebug.append ("SELECT * FROM UTILISATEURS");
+			if(where.length > 0) {
+				toDebug.append (" WHERE ");
+				int i = 0;
+				for (String clause : where) {
+					if(i > 0) {
+						toDebug.append ("AND ");
+					}
+					toDebug.append ( clause + "=" + values[i]);
+					i++;
+				}
+			}
+			
+	    	logger.debug(toDebug);
+	    }
+	}
+	
 	public static List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
-
+		String where[] = {};
+	    String values[] = {};
+	    
 		Connection con;
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
 			
 		    Statement stmt = con.createStatement();
 		    ResultSet results = stmt.executeQuery("SELECT * FROM UTILISATEURS");
+		    logSelect(true, where, values, null);
+		    
 		    while (results.next()) {
 		    	User user = new User();
 		    	user.setId(results.getString(1));
@@ -33,17 +85,18 @@ public class UserDao implements IUserDao {
 		    	
 		    	users.add(user);
 		    }
-			
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logSelect(false, where, values, e);
 		}
 		return users;
 	}
 	
 	public static User getUserById(String id) {
 		User user = new User();
-
+		String where[] = {"ID"};
+	    String values[] = {id};
+	    
 		Connection con;
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
@@ -58,10 +111,10 @@ public class UserDao implements IUserDao {
 		    	user.setAdministrateur(results.getBoolean(3));
 		    	user.setNom(results.getString(4));
 		    }
-		    
+		    logSelect(true, where, values, null);
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+		    logSelect(false, where, values, e);
 		}
 		return user;
 	}
@@ -69,16 +122,21 @@ public class UserDao implements IUserDao {
 	@Override
 	public boolean checkLogin(User user) {
 		boolean accesOk = false;
-			User existingUser = null;
-			for (User u: getAllUsers()) {
-				if (u.getId().equals(user.getId())) {
-					existingUser = u;
-					break;
-				}
+		User existingUser = null;
+		for (User u: getAllUsers()) {
+			if (u.getId().equals(user.getId())) {
+				existingUser = u;
+				break;
 			}
-			if (existingUser != null) {
-				accesOk = (user.getId().equals(existingUser.getId())
-						&& user.getPassword().equals(existingUser.getPassword()));
+		}
+		if (existingUser != null) {
+			accesOk = (user.getId().equals(existingUser.getId())
+					&& user.getPassword().equals(existingUser.getPassword()));
+		}
+		if(!accesOk) {
+			if(logLevel.actualLogLevel <= logLevel.ERROR) {
+				logger.error("La connexion à été refusée à l'utilisateur " + user.getId() + ".");
+			}
 		}
 		return accesOk;
 	}
@@ -96,10 +154,11 @@ public class UserDao implements IUserDao {
 		    
 		    psmt.executeUpdate();
 		    
-		    StartupListner.insertUserSucceed(newUser.getId());		
+		    logInsert(true, newUser.getId(), newUser.getPassword(), newUser.isAdministrateur(), newUser.getNom(), null);
+		    
 			con.close();
 		} catch (SQLException e) {
-			StartupListner.insertUserFailed(newUser.getId(), e);
+			logInsert(false, newUser.getId(), newUser.getPassword(), newUser.isAdministrateur(), newUser.getNom(), e);
 		}
 	}
 }

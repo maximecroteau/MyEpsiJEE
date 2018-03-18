@@ -2,10 +2,10 @@ package fr.epsi.myEpsi.jmx;
 
 public interface PremierMBean {
 	
-	public String getNom();
-	public int getValeur();
-
-	public void setValeur(int valeur);
-	public void rafraichir();
+	public String getLevel();
+	
+	public void DEBUG();
+	public void INFO();
+	public void ERROR();
 
 }

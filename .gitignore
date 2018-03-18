@@ -4,6 +4,10 @@
 # Log file
 *.log
 
+#DB files
+db/projet1.properties
+db/projet1.lck
+
 # IntelliJ files
 fr.epsi.myEpsi/.idea
 fr.epsi.myEpsi/out

@@ -21,7 +21,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.epsi.myEpsi.Constants;
+import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.jmx.Premier;
+import fr.epsi.myEpsi.jmx.Second;
 
 
 /**
@@ -31,7 +33,7 @@ import fr.epsi.myEpsi.jmx.Premier;
 @WebListener
 public class StartupListner implements ServletContextListener {
 
-	private static final Logger logger = LogManager.getLogger(StartupListner.class);
+	private static Logger logger = LogManager.getLogger(StartupListner.class);
 
     /**
      * Default constructor. 
@@ -45,21 +47,17 @@ public class StartupListner implements ServletContextListener {
 		
 	}
 	
-	public static void insertUserSucceed(String id) {
-		logger.info("L'utilisateur " + id + " a été inséré en base de données.");
-	}
-	
-	public static void insertUserFailed(String id, SQLException e) {
-		logger.error("L'utilisateur " + id + " n'a pas été inséré en base de données : " + e);
-	}
-
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		logger.info("Démarrage de l'application");
+		if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Démarrage de l'application");
+		}
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
 			Connection con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
-			logger.info("Démarrage BDD OK");
+			if(logLevel.actualLogLevel <= logLevel.INFO) {
+				logger.info("Démarrage BDD OK");
+			}
 			con.close();
 		} catch (ClassNotFoundException e) {
 			logger.error("Erreur au démarrage. Pas de driver...", e);
@@ -80,7 +78,8 @@ public class StartupListner implements ServletContextListener {
 			annonces.next();
 			int nbAnnonces = annonces.getInt(1);
 			
-			logger.info("Données récupérées : " + nbUsers + " utilisateur(s) et " + nbAnnonces + " annonce(s).");
+			logger.error("Données récupérées : " + nbUsers + " utilisateur(s).");
+			logger.error("Données récupérées : " + nbAnnonces + " annonce(s).");
 			con.close();
 		} catch (SQLException e) {
 			logger.error("Erreur lors de récupération de données dans la BDD", e);
@@ -92,11 +91,8 @@ public class StartupListner implements ServletContextListener {
 	    
 	    try {
 	      name = new ObjectName("fr.epsi.myEpsi.jmx:type=PremierMBean");
-	      Premier mbean = new Premier();
-
+	      Premier mbean = new Premier(logLevel.getLevel());
 	      mbs.registerMBean(mbean, name);
-
-	      System.out.println("Lancement ...");
 	    } catch (MalformedObjectNameException e) {
 	    	e.printStackTrace();
 	    } catch (NullPointerException e) {
@@ -108,6 +104,22 @@ public class StartupListner implements ServletContextListener {
 	    } catch (NotCompliantMBeanException e) {
 	    	e.printStackTrace();
 	    }
+	    
+	    try {
+		      name = new ObjectName("fr.epsi.myEpsi.jmx:type=SecondMBean");
+		      Second mbean = new Second();
+		      mbs.registerMBean(mbean, name);
+		    } catch (MalformedObjectNameException e) {
+		    	e.printStackTrace();
+		    } catch (NullPointerException e) {
+		    	e.printStackTrace();
+		    } catch (InstanceAlreadyExistsException e) {
+		    	e.printStackTrace();
+		    } catch (MBeanRegistrationException e) {
+		    	e.printStackTrace();
+		    } catch (NotCompliantMBeanException e) {
+		    	e.printStackTrace();
+		    }
 
 	}
 	
