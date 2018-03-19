@@ -21,6 +21,7 @@ User user = (User)request.getAttribute("USER");
     <div class="nav-wrapper teal lighten-2">
         <a href="#" class="brand-logo">MyEpsiApplication</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="addOffer.html">Ajouter une annonce</a></li>
             <li><a href="login.html">Deconnexion</a></li>
         </ul>
     </div>
@@ -48,9 +49,12 @@ for (Offer offer : myOffers) {
     out.println("<td>" + offer.getDescription() + "</d>");
     out.println("<td>" + offer.getVendeur().getNom() + "</d>");
     out.println("<td>" + offer.getCreation() + "</d>");
+    out.println("<td><a class=\"waves-effect waves-light btn\">Afficher</a></d>");
+    out.println("<td><a class=\"waves-effect waves-light btn\">Modifier</a></d>");
+    out.println("<td><a class=\"waves-effect waves-light btn\">Supprimer</a></d>");
     out.println("</tr >");
     out.println("</tbody >");
-    out.println("</table >");
+    //<a class="waves-effect waves-light btn-large">Button</a>
 }
 %>
     </tr>

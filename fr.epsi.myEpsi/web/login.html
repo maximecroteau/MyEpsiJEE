@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="ISO-8859-1">
+        <link rel="stylesheet" href="CSS/materialize.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Connectez-vous</title>
 	</head>
 	
 	<body>
+
+	<nav>
+		<div class="nav-wrapper teal lighten-2">
+			<a href="#" class="brand-logo">MyEpsiApplication</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="login.html">Deconnexion</a></li>
+			</ul>
+		</div>
+	</nav>
+
 		<form action="/LoginServlet" method="POST">
 		<!-- <form action="/fr.epsi.myEpsi/LoginServlet" method="POST"> -->
 			<input type="text" name="LOGIN"><br>
