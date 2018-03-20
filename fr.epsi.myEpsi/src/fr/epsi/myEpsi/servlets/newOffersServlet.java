@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -25,6 +29,8 @@ public class newOffersServlet extends HttpServlet {
         //java.sql.Date(today.getTime())
 
         Offer offer = new Offer();
+
+        offer.setId(OfferDao.getNbOffer());
         offer.setTitre(title);
         offer.setDescription(content);
         offer.setPrix(prix);

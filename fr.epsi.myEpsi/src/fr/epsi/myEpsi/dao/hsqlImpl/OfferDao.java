@@ -60,13 +60,34 @@ public class OfferDao implements IOfferDao {
 		return offers;
 	}
 
+    public static int getNbOffer() {
+        int nbAnnonces = 0;
+        try {
+
+            Connection con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+            Statement stmt = con.createStatement();
+            ResultSet offers = stmt.executeQuery("SELECT COUNT(ID) FROM ANNONCES");
+            offers.next();
+            nbAnnonces = offers.getInt(1);
+            //StartupListner.insertOfferSucceed(newOffer.getId());
+            //con.close();
+        }  catch (SQLException e) {
+            // StartupListner.insertOfferFailed(newOffer.getId(), e);
+            System.out.println(e);
+        }
+        return nbAnnonces;
+    }
+
 	public static void saveOffer(Offer newOffer) {
-		Connection con;
+        Connection con;
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+			Statement stmt = con.createStatement();
 
             PreparedStatement psmt = con.prepareStatement("INSERT INTO ANNONCES (ID,TITLE,CONTENT,PRICE,USER_ID,CREATION_DATE,STATUS) VALUES(?,?,?,?,?,?,?)");
-			psmt.setInt(1, newOffer.getId());
+
+
+            psmt.setInt(1, newOffer.getId());
 			psmt.setString(2, newOffer.getTitre());
 			psmt.setString(3, newOffer.getDescription());
             psmt.setDouble(4, newOffer.getPrix());

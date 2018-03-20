@@ -49,12 +49,11 @@ for (Offer offer : myOffers) {
     out.println("<td>" + offer.getDescription() + "</d>");
     out.println("<td>" + offer.getVendeur().getNom() + "</d>");
     out.println("<td>" + offer.getCreation() + "</d>");
-    out.println("<td><a class=\"waves-effect waves-light btn\">Afficher</a></d>");
-    out.println("<td><a class=\"waves-effect waves-light btn\">Modifier</a></d>");
-    out.println("<td><a class=\"waves-effect waves-light btn\">Supprimer</a></d>");
+    out.println("<td><button class=\"btn waves-effect waves-light\" type=\"submit\" name=\"afficher\">Afficher</button></d>");
+    out.println("<td><button class=\"btn waves-effect waves-light\" type=\"submit\" name=\"modifier\">Modifier</button></d>");
+    out.println("<td><button class=\"btn waves-effect waves-light\" type=\"submit\" name=\"supprimer\">Supprimer</button></d>");
     out.println("</tr >");
     out.println("</tbody >");
-    //<a class="waves-effect waves-light btn-large">Button</a>
 }
 %>
     </tr>
