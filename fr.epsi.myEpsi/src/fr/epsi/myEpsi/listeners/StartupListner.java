@@ -83,7 +83,7 @@ public class StartupListner implements ServletContextListener {
 	    } catch (NullPointerException e) {
 	    	e.printStackTrace();
 	    } catch (InstanceAlreadyExistsException e) {
-	    	e.printStackTrace();
+	    	logger.error("PremierMBean déjà instancié.");
 	    } catch (MBeanRegistrationException e) {
 	    	e.printStackTrace();
 	    } catch (NotCompliantMBeanException e) {
@@ -99,7 +99,7 @@ public class StartupListner implements ServletContextListener {
 		    } catch (NullPointerException e) {
 		    	e.printStackTrace();
 		    } catch (InstanceAlreadyExistsException e) {
-		    	e.printStackTrace();
+		    	logger.error("SecondMBean déjà instancié.");
 		    } catch (MBeanRegistrationException e) {
 		    	e.printStackTrace();
 		    } catch (NotCompliantMBeanException e) {

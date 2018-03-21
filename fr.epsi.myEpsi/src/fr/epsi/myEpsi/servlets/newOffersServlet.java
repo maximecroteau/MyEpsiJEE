@@ -48,7 +48,7 @@ public class newOffersServlet extends HttpServlet {
         offer.setModification(DateSQL);
         
         offer.setVendeur(Constants.actualUser);
-        
+
         OfferDao.saveOffer(offer);
         
 

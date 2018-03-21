@@ -16,7 +16,7 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
 
 public class OfferDao {
-	private static final Logger logger = LogManager.getLogger(UserDao.class);
+	private static final Logger logger = LogManager.getLogger(OfferDao.class);
 
 	private static void logInsert(boolean succes, int id, String titre, String description, int statut, Double prix, Date creation, String idVendeur, SQLException e) {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
@@ -26,10 +26,10 @@ public class OfferDao {
 			} else {
 				toDebug.append ("Échec de la requête suivante : ");
 			}
-			toDebug.append ("INSERT INTO ANNONCES (ID,TITLE,CONTENT,PRICE,USER_ID,CREATION_DATE,STATUS,NB_VIEW,UPDATE_DATE) ");
-			toDebug.append ("VALUES (" + id + "," + titre + "," + description + "," + prix + "," + idVendeur+ "," + creation + "," + statut + ",0," + creation + ")");
+			toDebug.append ("INSERT INTO ANNONCES (ID , TITLE , CONTENT , PRICE , USER_ID , CREATION_DATE , STATUS , NB_VIEW , UPDATE_DATE) ");
+			toDebug.append ("VALUES (" + id + " , \"" + titre + "\" , \"" + description + "\" , " + prix + " , \"" + idVendeur+ "\" , \"" + creation + "\" , " + statut + " , 0 , \"" + creation + "\")");
 			if(!succes) {
-				toDebug.append(e);
+				toDebug.append(" : " + e);
 			}
 		
 	    	logger.debug(toDebug);
@@ -116,7 +116,7 @@ public class OfferDao {
         Connection con;
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
-            PreparedStatement psmt = con.prepareStatement("INSERT INTO ANNONCES (ID,TITLE,CONTENT,PRICE,USER_ID,CREATION_DATE,STATUS,NB_VIEW,UPDATE_DATE) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement psmt = con.prepareStatement("INSERT INTO ANNONCES (ID,TITLE,CONTENT,PRICE,USER_ID,CREATION_DATE,STATUS,NB_VIEW,UPDATE_DATE) VALUES(?,?,?,?,?,?,?,?,?)");
 
             psmt.setInt(1, newOffer.getId());
 			psmt.setString(2, newOffer.getTitre());

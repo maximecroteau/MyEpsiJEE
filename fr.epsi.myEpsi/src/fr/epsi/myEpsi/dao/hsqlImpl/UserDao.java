@@ -27,10 +27,10 @@ public class UserDao {
 			} else {
 				toDebug.append ("Échec de la requête suivante : ");
 			}
-			toDebug.append ("INSERT INTO UTILISATEURS (ID,PASSWORD,ISADMINISTRATOR,NAME)");
-			toDebug.append ("VALUES (" + id + "," + pwd + "," + admin + "," + nom + ")");
+			toDebug.append ("INSERT INTO UTILISATEURS (ID , PASSWORD , ISADMINISTRATOR , NAME)");
+			toDebug.append ("VALUES (\"" + id + "\" , \"" + pwd + "\" , " + admin + " , \"" + nom + "\")");
 			if(!succes) {
-				toDebug.append (e);
+				toDebug.append(" : " + e);
 			}
 			
 	    	logger.debug(toDebug);

@@ -22,7 +22,7 @@ User user = (User)request.getAttribute("USER");
         <a href="#" class="brand-logo">MyEpsiApplication</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="addOffer.html">Ajouter une annonce</a></li>
-            <li><a href="login.html">Deconnexion</a></li>
+            <li><a href="login.html">Déconnexion</a></li>
         </ul>
     </div>
 </nav>
@@ -56,7 +56,6 @@ for (Offer offer : myOffers) {
     out.println("</tbody >");
 }
 %>
-    </tr>
 </table>
 </body>
 </html>
