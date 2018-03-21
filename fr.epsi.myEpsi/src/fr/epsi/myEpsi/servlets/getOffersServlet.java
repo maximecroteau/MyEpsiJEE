@@ -14,8 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.logLevel;
-import fr.epsi.myEpsi.dao.IOfferDao;
-//import fr.epsi.myEpsi.dao.mockImpl.AnnonceDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 
 /**
@@ -42,8 +40,7 @@ public class getOffersServlet extends HttpServlet {
 			logger.info("Appel doGet de la servlet getOffersServlet");
 		}
 		String login = request.getParameter("LOGIN");
-		IOfferDao offerDao = new OfferDao();
-		List<Offer> myOffers = offerDao.getOffers(login);
+		List<Offer> myOffers = OfferDao.getOffers(login);
 		
 		request.setAttribute("OFFERS", myOffers);
 		request.getRequestDispatcher("offers.jsp").forward(request, response);

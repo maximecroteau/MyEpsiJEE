@@ -15,9 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.beans.User;
-import fr.epsi.myEpsi.dao.IUserDao;
 
-public class UserDao implements IUserDao {
+public class UserDao {
 	private static final Logger logger = LogManager.getLogger(UserDao.class);
 	
 	private static void logInsert(boolean succes, String id, String pwd, boolean admin, String nom, SQLException e) {
@@ -63,6 +62,20 @@ public class UserDao implements IUserDao {
 	    }
 	}
 	
+	private static void logCount(boolean succes, SQLException e) {
+		if(logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if(succes) {
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append ("Échec de la requête suivante : ");
+			}
+			toDebug.append ("SELECT COUNT(ID) FROM UTILISATEURS");
+			
+	    	logger.debug(toDebug);
+	    }
+	}
+	
 	public static List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
 		String where[] = {};
@@ -92,6 +105,24 @@ public class UserDao implements IUserDao {
 		return users;
 	}
 	
+	public static int getNbUser() {
+        int nbUsers = 0;
+        String req = "SELECT COUNT(ID) FROM UTILISATEURS";
+        try {
+            Connection con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(req);
+            res.next();
+            nbUsers = res.getInt(1);
+                      
+            con.close();
+            logCount(true, null);
+        }  catch (SQLException e) {
+        	logCount(false, e);
+        }
+        return nbUsers;
+    }
+	
 	public static User getUserById(String id) {
 		User user = new User();
 		String where[] = {"ID"};
@@ -119,8 +150,7 @@ public class UserDao implements IUserDao {
 		return user;
 	}
 	
-	@Override
-	public boolean checkLogin(User user) {
+	public static boolean checkLogin(User user) {
 		boolean accesOk = false;
 		User existingUser = null;
 		for (User u: getAllUsers()) {

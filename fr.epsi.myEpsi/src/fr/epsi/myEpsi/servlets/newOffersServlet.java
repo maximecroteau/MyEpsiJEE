@@ -1,9 +1,8 @@
 package fr.epsi.myEpsi.servlets;
 
+import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.beans.User;
-import fr.epsi.myEpsi.dao.IOfferDao;
-import fr.epsi.myEpsi.dao.IUserDao;
+import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
@@ -12,38 +11,51 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
-import java.util.Calendar;
+import java.util.List;
 
 @WebServlet("/newOffersServlet")
 public class newOffersServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = LogManager.getLogger(newOffersServlet.class);
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doGet de la servlet newOffersServlet");
+		}
+		
+		
         String title = request.getParameter("TITLE");
         String content = request.getParameter("CONTENT");
         Double prix = Double.parseDouble(request.getParameter("PRICE"));
-        //java.sql.Date(today.getTime())
 
         Offer offer = new Offer();
 
-        offer.setId(OfferDao.getNbOffer());
+        offer.setId(OfferDao.getNbOffer() + 1);
         offer.setTitre(title);
         offer.setDescription(content);
         offer.setPrix(prix);
+        
         java.util.Date dateJava = new java.util.Date();
         java.sql.Date DateSQL = new java.sql.Date(dateJava.getTime());
         offer.setCreation(DateSQL);
-        offer.setStatut(1);
-        User user = new User();
-        user.setId("Max");
-        offer.setVendeur(user);
+        offer.setModification(DateSQL);
+        
+        offer.setVendeur(Constants.actualUser);
+        
         OfferDao.saveOffer(offer);
-        request.setAttribute("OFFER", offer);
-        request.getRequestDispatcher("LoginServlet").forward(request, response);
+        
+
+		List<Offer> myOffers = OfferDao.getOffers(Constants.actualUser.getId());
+		request.setAttribute("OFFERS", myOffers);
+		request.setAttribute("USER", UserDao.getUserById(Constants.actualUser.getId()));
+		request.getRequestDispatcher("offers.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

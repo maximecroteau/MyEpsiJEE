@@ -3,9 +3,7 @@ package fr.epsi.myEpsi.listeners;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
@@ -22,6 +20,8 @@ import org.apache.logging.log4j.Logger;
 
 import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.logLevel;
+import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
+import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 import fr.epsi.myEpsi.jmx.Premier;
 import fr.epsi.myEpsi.jmx.Second;
 
@@ -65,26 +65,11 @@ public class StartupListner implements ServletContextListener {
 			logger.error("Erreur au démarrage. Probleme de connexion...", e);
 			
 		}
-		
-		try {
-			Connection con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
-			Statement stmt = con.createStatement();
-			
-			ResultSet users = stmt.executeQuery("SELECT COUNT(ID) FROM UTILISATEURS");
-			users.next();
-			int nbUsers = users.getInt(1);
-			
-			ResultSet annonces = stmt.executeQuery("SELECT COUNT(ID) FROM ANNONCES");
-			annonces.next();
-			int nbAnnonces = annonces.getInt(1);
-			
-			logger.error("Données récupérées : " + nbUsers + " utilisateur(s).");
-			logger.error("Données récupérées : " + nbAnnonces + " annonce(s).");
-			con.close();
-		} catch (SQLException e) {
-			logger.error("Erreur lors de récupération de données dans la BDD", e);
-			
-		}
+
+		int nbUsers = UserDao.getNbUser();
+		int nbAnnonces = OfferDao.getNbOffer();
+		logger.error("Données récupérées : " + nbUsers + " utilisateur(s).");
+		logger.error("Données récupérées : " + nbAnnonces + " annonce(s).");
 		
 		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 	    ObjectName name = null;

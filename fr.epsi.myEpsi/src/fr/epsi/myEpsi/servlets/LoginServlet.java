@@ -12,13 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
-import fr.epsi.myEpsi.dao.IOfferDao;
-import fr.epsi.myEpsi.dao.IUserDao;
-//import fr.epsi.myEpsi.dao.mockImpl.AnnonceDao;
-//import fr.epsi.myEpsi.dao.mockImpl.UtilisateurDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 /**
@@ -51,12 +48,11 @@ public class LoginServlet extends HttpServlet {
 		user.setId(login);
 		user.setPassword(password);
 		
-		IUserDao userDao = new UserDao();
-		if (userDao.checkLogin(user)) {
-			IOfferDao offerDao = new OfferDao();
-			List<Offer> myOffers = offerDao.getOffers(login);
+		if (UserDao.checkLogin(user)) {
+			Constants.actualUser = UserDao.getUserById(login);
+			List<Offer> myOffers = OfferDao.getOffers(login);
 			request.setAttribute("OFFERS", myOffers);
-			request.setAttribute("USER", UserDao.getUserById(login));
+			request.setAttribute("USER", Constants.actualUser);
 			request.getRequestDispatcher("offers.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("login.html").forward(request, response);
