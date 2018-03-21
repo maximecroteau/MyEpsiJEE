@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
@@ -49,10 +48,9 @@ public class LoginServlet extends HttpServlet {
 		user.setPassword(password);
 		
 		if (UserDao.checkLogin(user)) {
-			Constants.actualUser = UserDao.getUserById(login);
 			List<Offer> myOffers = OfferDao.getOffers(login);
 			request.setAttribute("OFFERS", myOffers);
-			request.setAttribute("USER", Constants.actualUser);
+			request.setAttribute("USER", UserDao.getUserById(login));
 			request.getRequestDispatcher("offers.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("login.html").forward(request, response);

@@ -21,8 +21,13 @@ User user = (User)request.getAttribute("USER");
     <div class="nav-wrapper teal lighten-2">
         <a href="#" class="brand-logo">MyEpsiApplication</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="addOffer.html">Ajouter une annonce</a></li>
-            <li><a href="login.html">Déconnexion</a></li>
+            <li>
+            	<a href="/addOfferServlet?ID=<%= user.getId() %>">Ajouter une annonce</a>
+            	<!--<a href="/fr.epsi.myEpsi/addOfferServlet?ID=<%= user.getId() %>">Ajouter une annonce</a>-->
+            </li>
+            <li>
+            	<a href="login.html">Déconnexion</a>
+            </li>
         </ul>
     </div>
 </nav>

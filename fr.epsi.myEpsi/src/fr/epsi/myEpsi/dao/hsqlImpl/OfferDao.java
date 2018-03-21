@@ -54,7 +54,7 @@ public class OfferDao {
 		
 		for (Offer offer : getAllOffers()) {
 			// Vérifie si on peut la voir
-			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId() == loginId) {
+			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId().equals(loginId)) {
 				myOffers.add(offer);
 			}
 		}

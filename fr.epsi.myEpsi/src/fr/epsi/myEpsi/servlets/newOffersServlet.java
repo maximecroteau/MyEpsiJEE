@@ -1,7 +1,7 @@
 package fr.epsi.myEpsi.servlets;
 
-import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
+import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
@@ -34,6 +34,7 @@ public class newOffersServlet extends HttpServlet {
         String title = request.getParameter("TITLE");
         String content = request.getParameter("CONTENT");
         Double prix = Double.parseDouble(request.getParameter("PRICE"));
+        String idVendeur = request.getParameter("USER");
 
         Offer offer = new Offer();
 
@@ -47,14 +48,14 @@ public class newOffersServlet extends HttpServlet {
         offer.setCreation(DateSQL);
         offer.setModification(DateSQL);
         
-        offer.setVendeur(Constants.actualUser);
+        User vendeur = UserDao.getUserById(idVendeur);
+        offer.setVendeur(vendeur);
 
         OfferDao.saveOffer(offer);
-        
-
-		List<Offer> myOffers = OfferDao.getOffers(Constants.actualUser.getId());
+		List<Offer> myOffers = OfferDao.getOffers(idVendeur);
+		
 		request.setAttribute("OFFERS", myOffers);
-		request.setAttribute("USER", UserDao.getUserById(Constants.actualUser.getId()));
+		request.setAttribute("USER", vendeur);
 		request.getRequestDispatcher("offers.jsp").forward(request, response);
     }
 
