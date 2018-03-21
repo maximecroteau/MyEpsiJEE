@@ -17,7 +17,8 @@ public class Offer {
 	private Date achat;
 	
 	public Offer() {
-		statut = Status.TEMPORAIRE;
+		this.setStatut(Status.TEMPORAIRE);
+		this.setNbVues(0);
 	}
 
 	public int getId() {
