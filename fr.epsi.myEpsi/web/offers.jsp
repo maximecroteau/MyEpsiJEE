@@ -19,11 +19,11 @@ User user = (User)request.getAttribute("USER");
 
 <nav>
     <div class="nav-wrapper teal lighten-2">
-        <a href="#" class="brand-logo">MyEpsiApplication</a>
+        <a href="#" class="brand-logo">MyEpsi Application</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li>
-            	<a href="/addOfferServlet?ID=<%= user.getId() %>">Ajouter une annonce</a>
-            	<!--<a href="/fr.epsi.myEpsi/addOfferServlet?ID=<%= user.getId() %>">Ajouter une annonce</a>-->
+            	<a href="/newOffer.jsp?ID=<%= user.getId() %>">Ajouter une annonce</a>
+            	<!--<a href="/fr.epsi.myEpsi/newOffer.jsp?ID=<%= user.getId() %>">Ajouter une annonce</a>-->
             </li>
             <li>
             	<a href="login.html">Déconnexion</a>

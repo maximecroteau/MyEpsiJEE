@@ -111,6 +111,24 @@ public class OfferDao {
         }
         return nbAnnonces;
     }
+    
+    public static int getMaxId() {
+        int maxId = 0;
+        String req = "SELECT MAX(ID) FROM ANNONCES";
+        try {
+            Connection con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+            Statement stmt = con.createStatement();
+            ResultSet offers = stmt.executeQuery(req);
+            offers.next();
+            maxId = offers.getInt(1);
+                      
+            con.close();
+            logSelect(true, req, null);
+        }  catch (SQLException e) {
+        	logSelect(false, req, e);
+        }
+        return maxId;
+    }
 
 	public static void saveOffer(Offer newOffer) {
         Connection con;
