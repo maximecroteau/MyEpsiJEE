@@ -8,22 +8,21 @@
 	<title>Ajout d'annonce</title>
 </head>
 <%
-String userID = (String)request.getAttribute("ID");
-out.print(userID);
+String userID = (String)request.getParameter("ID");
 %>
 <body>
 
 	<nav>
 	    <div class="nav-wrapper teal lighten-2">
-	        <a href="#" class="brand-logo">MyEpsiApplication</a>
+	        <a href="#" class="brand-logo">MyEpsi Application</a>
 	        <ul id="nav-mobile" class="right hide-on-med-and-down">
 	            <li><a href="login.html">Deconnexion</a></li>
 	        </ul>
 	    </div>
 	</nav>
 
- 	<form action="/newOffersServlet" method="POST">
-    <!--<form action="/fr.epsi.myEpsi/newOffersServlet" method="POST"> -->
+ 	<form action="/newOffersServlet" method="POST"> 
+    <!--<form action="/fr.epsi.myEpsi/newOffersServlet" method="POST">-->
 
     <div class="row">
         <div class="input-field col s12">
