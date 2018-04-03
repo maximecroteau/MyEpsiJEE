@@ -60,12 +60,14 @@
 			out.println(
 					"<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='editOfferServlet?ID="
 							+ offer.getId() + "&USER="+ user.getId() +"&EDIT=0';\" value=\"Afficher\" /></d>");
-			out.println(
-					"<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='editOfferServlet?ID="
-							+ offer.getId() + "&USER="+ user.getId() +"&EDIT=1';\" value=\"Modifier\" /></d>");
-			out.println(
-					"<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='deleteOfferServlet?ID="
-							+ offer.getId() + "&USER="+ user.getId() +"';\" value=\"Supprimer\" /></d>");
+			if(offer.getVendeur().getId() == user.getId()){
+				out.println(
+						"<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='editOfferServlet?ID="
+								+ offer.getId() + "&USER="+ user.getId() +"&EDIT=1';\" value=\"Modifier\" /></d>");
+				out.println(
+						"<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='deleteOfferServlet?ID="
+								+ offer.getId() + "&USER="+ user.getId() +"';\" value=\"Supprimer\" /></d>");
+			}
 			out.println("</tr >");
 			out.println("</tbody >");
 		}
