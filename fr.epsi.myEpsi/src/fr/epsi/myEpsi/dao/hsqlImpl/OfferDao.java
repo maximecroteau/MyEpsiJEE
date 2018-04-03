@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.Status;
+import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
@@ -22,9 +23,9 @@ public class OfferDao {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if(succes) {
-				toDebug.append ("Requête suivante éxécutée avec succès : ");
+				toDebug.append ("Requï¿½te suivante ï¿½xï¿½cutï¿½e avec succï¿½s : ");
 			} else {
-				toDebug.append ("Échec de la requête suivante : ");
+				toDebug.append ("ï¿½chec de la requï¿½te suivante : ");
 			}
 			toDebug.append ("INSERT INTO ANNONCES (ID , TITLE , CONTENT , PRICE , USER_ID , CREATION_DATE , STATUS , NB_VIEW , UPDATE_DATE) ");
 			toDebug.append ("VALUES (" + id + " , \"" + titre + "\" , \"" + description + "\" , " + prix + " , \"" + idVendeur+ "\" , \"" + creation + "\" , " + statut + " , 0 , \"" + creation + "\")");
@@ -40,9 +41,9 @@ public class OfferDao {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if(succes) {
-				toDebug.append ("Requête suivante éxécutée avec succès : ");
+				toDebug.append ("Requï¿½te suivante ï¿½xï¿½cutï¿½e avec succï¿½s : ");
 			} else {
-				toDebug.append ("Échec de la requête suivante : ");
+				toDebug.append ("ï¿½chec de la requï¿½te suivante : ");
 			}
 			toDebug.append (req);
 	    	logger.debug(toDebug);
@@ -51,16 +52,71 @@ public class OfferDao {
 	
 	public static List<Offer> getOffers(String loginId){
 		List<Offer> myOffers = new ArrayList<>();
-		
+
 		for (Offer offer : getAllOffers()) {
-			// Vérifie si on peut la voir
+			// Vï¿½rifie si on peut la voir
 			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId().equals(loginId)) {
 				myOffers.add(offer);
 			}
 		}
 		return myOffers;
 	}
-	
+
+	public static Offer getOfferById(String id) {
+		Offer offer = new Offer();
+
+		String req = "SELECT * FROM ANNONCES WHERE ID = ?";
+		Connection con;
+		try {
+			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+
+			PreparedStatement psmt = con.prepareStatement(req);
+			psmt.setString(1, id);
+			ResultSet results = psmt.executeQuery();
+
+			if (results.next()) {
+				offer = new Offer();
+				offer.setId(results.getInt(1));
+				offer.setTitre(results.getString(2));
+				offer.setDescription(results.getString(3));
+				offer.setVendeur(UserDao.getUserById(results.getString(4)));
+				offer.setCreation(results.getDate(5));
+				offer.setModification(results.getDate(6));
+				offer.setStatut(results.getInt(7));
+				if (results.getString(8) != null) {
+					offer.setAcheteur(UserDao.getUserById(results.getString(8)));
+					offer.setAchat(results.getDate(9));
+				}
+				offer.setPrix(results.getDouble(11));
+			}
+			logSelect(true, req.replace("?", id), null);
+			con.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			logSelect(false, req.replace("?", "\""+id+"\""), e);
+		}
+		return offer;
+	}
+
+	public static void deleteOffer(String id) {
+		String req = "DELETE FROM ANNONCES WHERE ID = ?";
+		Connection con;
+		try {
+			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+
+			PreparedStatement psmt = con.prepareStatement(req);
+			psmt.setString(1, id);
+			psmt.executeUpdate();
+
+			logSelect(true, req.replace("?", "\""+id+"\""), null);
+			con.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			logSelect(false, req.replace("?", "\""+id+"\""), e);
+		}
+
+	}
+
 	public static List<Offer> getAllOffers() {
 		List<Offer> offers = new ArrayList<>();
 		String req = "SELECT * FROM ANNONCES";
@@ -155,4 +211,32 @@ public class OfferDao {
 		}
 	}
 
+	public static void updateOffer(Offer newOffer) {
+		Connection con;
+		System.out.println(newOffer);
+		try {
+			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+					"UPDATE ANNONCES SET TITLE = ?, CONTENT = ?, PRICE = ?, STATUS = ?, UPDATE_DATE = ? WHERE ID = ?");
+			PreparedStatement psmt = con.prepareStatement(
+
+			psmt.setString(2, newOffer.getDescription());
+			psmt.setString(1, newOffer.getTitre());
+			if (newOffer.getPrix() != null) {
+				psmt.setDouble(3, newOffer.getPrix());
+			} else {
+				psmt.setDouble(3, -1d);
+			}
+			java.sql.Date DateSQL = new java.sql.Date(newOffer.getModification().getTime());
+			psmt.setInt(4, newOffer.getStatut());
+			psmt.setDate(5, DateSQL);
+			psmt.setInt(6, newOffer.getId());
+
+			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
+					newOffer.getPrix(), DateSQL, null);
+			con.close();
+		} catch (SQLException e) {
+			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
+					newOffer.getPrix(), new java.sql.Date(newOffer.getModification().getTime()), e);
+	}
+		}
 }
