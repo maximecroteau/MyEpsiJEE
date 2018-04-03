@@ -230,7 +230,6 @@ public class OfferDao {
 
 	public static void updateOffer(Offer newOffer) {
 		Connection con;
-		System.out.println(newOffer);
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
 					
@@ -247,12 +246,12 @@ public class OfferDao {
 			psmt.setInt(4, newOffer.getStatut());
 			psmt.setDate(5, DateSQL);
 			psmt.setInt(6, newOffer.getId());
-
+			psmt.executeUpdate();
 			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
 					newOffer.getPrix(), DateSQL, null);
 			con.close();
 		} catch (SQLException e) {
-			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
+			logUpdate(false, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
 					newOffer.getPrix(), new java.sql.Date(newOffer.getModification().getTime()), e);
 	}
 		}
