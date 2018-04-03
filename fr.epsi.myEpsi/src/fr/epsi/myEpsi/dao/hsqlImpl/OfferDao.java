@@ -19,6 +19,24 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 public class OfferDao {
 	private static final Logger logger = LogManager.getLogger(OfferDao.class);
 
+	private static void logUpdate(boolean succes, int id, String titre, String description, int statut, Double prix,
+			Date modification, SQLException e) {
+		if (logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if (succes) {
+				toDebug.append("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append("Échec de la requête suivante : ");
+			}
+			toDebug.append("UPDATE ANNONCES SET TITLE = \""+ titre +"\", CONTENT = \""+ description +"\", PRICE = "+prix+ ", STATUS = "+statut+", UPDATE_DATE = \""+modification+"\" WHERE ID = "+id);
+			if (!succes) {
+				toDebug.append(" : " + e);
+			}
+
+			logger.debug(toDebug);
+		}
+	}
+	
 	private static void logInsert(boolean succes, int id, String titre, String description, int statut, Double prix, Date creation, String idVendeur, SQLException e) {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
@@ -216,8 +234,8 @@ public class OfferDao {
 		System.out.println(newOffer);
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
-					"UPDATE ANNONCES SET TITLE = ?, CONTENT = ?, PRICE = ?, STATUS = ?, UPDATE_DATE = ? WHERE ID = ?");
-			PreparedStatement psmt = con.prepareStatement(
+					
+			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET TITLE = ?, CONTENT = ?, PRICE = ?, STATUS = ?, UPDATE_DATE = ? WHERE ID = ?");
 
 			psmt.setString(2, newOffer.getDescription());
 			psmt.setString(1, newOffer.getTitre());
