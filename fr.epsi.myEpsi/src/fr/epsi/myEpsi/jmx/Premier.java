@@ -1,33 +1,39 @@
 package fr.epsi.myEpsi.jmx;
 
+import fr.epsi.myEpsi.beans.logLevel;
+
 public class Premier implements PremierMBean {
-
-	private static String nom = "PremierMBean";
-	private int valeur = 100;
+	
+	private String level;
 	
 	@Override
-	public String getNom() {
-		return nom;
+	public String getLevel() {
+		return level;
 	}
 
 	@Override
-	public int getValeur() {
-		return valeur;
-	}
-
-	@Override
-	public void setValeur(int valeur) {
-		this.valeur = valeur;
-	}
-
-	@Override
-	public void rafraichir() {
-		setValeur(getValeur() + 1);
-		System.out.println("Rafraichir les donnees");
+	public void DEBUG() {
+		logLevel.setLevel(logLevel.DEBUG);
+		level = "DEBUG";
+		System.out.println("Niveau de log changés à DEBUG.");
 	}
 	
-	public Premier() {
+	@Override
+	public void INFO() {
+		logLevel.setLevel(logLevel.INFO);
+		level = "INFO";
+		System.out.println("Niveau de log changés à INFO");
+	}
 	
+	@Override
+	public void ERROR() {
+		logLevel.setLevel(logLevel.ERROR);
+		level = "ERROR";
+		System.out.println("Niveau de log changés à ERROR");
+	}
+	
+	public Premier(String lvl) {
+		level = lvl;
 	}
 
 }

@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
-import fr.epsi.myEpsi.dao.IOfferDao;
-import fr.epsi.myEpsi.dao.IUserDao;
-//import fr.epsi.myEpsi.dao.mockImpl.AnnonceDao;
-//import fr.epsi.myEpsi.dao.mockImpl.UtilisateurDao;
+import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 /**
@@ -23,7 +23,8 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger = LogManager.getLogger(LoginServlet.class);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,6 +37,9 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doPost de la servlet LoginServlet");
+		}
 		String login = request.getParameter("LOGIN");
 		String password = request.getParameter("PWD");
 		
@@ -43,16 +47,25 @@ public class LoginServlet extends HttpServlet {
 		user.setId(login);
 		user.setPassword(password);
 		
-		IUserDao userDao = new UserDao();
-		if (userDao.checkLogin(user)) {
-			IOfferDao offerDao = new OfferDao();
-			List<Offer> myOffers = offerDao.getOffers(login);
+		if (UserDao.checkLogin(user)) {
+			List<Offer> myOffers = OfferDao.getOffers(login);
 			request.setAttribute("OFFERS", myOffers);
 			request.setAttribute("USER", UserDao.getUserById(login));
 			request.getRequestDispatcher("offers.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("login.html").forward(request, response);
 		}
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Offer> myOffers = OfferDao.getOffers("ADMIN");
+		request.setAttribute("OFFERS", myOffers);
+		request.setAttribute("USER", UserDao.getUserById("ADMIN"));
+		request.getRequestDispatcher("offers.jsp").forward(request, response);
+
 	}
 
 }

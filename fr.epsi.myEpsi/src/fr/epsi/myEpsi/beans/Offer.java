@@ -6,6 +6,13 @@ public class Offer {
 	
 	private int id;
 	private User vendeur;
+	@Override
+	public String toString() {
+		return "Offer [id=" + id + ", vendeur=" + vendeur + ", titre=" + titre + ", description=" + description
+				+ ", statut=" + statut + ", prix=" + prix + ", nbVues=" + nbVues + ", creation=" + creation
+				+ ", modification=" + modification + ", acheteur=" + acheteur + ", achat=" + achat + "]";
+	}
+
 	private String titre;
 	private String description;
 	private int statut;
@@ -17,7 +24,8 @@ public class Offer {
 	private Date achat;
 	
 	public Offer() {
-		statut = Status.TEMPORAIRE;
+		this.setStatut(Status.TEMPORAIRE);
+		this.setNbVues(0);
 	}
 
 	public int getId() {

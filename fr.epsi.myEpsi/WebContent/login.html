@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <link rel="stylesheet" href="CSS/materialize.css" />
+        <link rel="stylesheet" href="CSS/custom.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Connectez-vous</title>
+	</head>
+	
+	<body>
+		<nav>
+			<div class="nav-wrapper teal lighten-2">
+				<a href="#" class="brand-logo">MyEpsi Application</a>
+			</div>
+		</nav>
+	
+		
+		<div class="row login">
+		
+			<div class="col s6 offset-s3">
+			<img alt="logo EPSI" src="IMG/epsilogo.png" class="logo">
+			<form action="LoginServlet" method="POST">
+			<!--<form action="/fr.epsi.myEpsi/LoginServlet" method="POST"> -->
+				<input type="text" name="LOGIN"><br>
+				<input type="password" name="PWD"><br>
+				<button class="btn waves-effect waves-light btn-co" type="submit" name="action">Se Connecter</button>
+			</form>
+			</div>
+			
+		</div>
+	</body>
+</html>

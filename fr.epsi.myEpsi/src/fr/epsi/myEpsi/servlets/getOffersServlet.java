@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.dao.IOfferDao;
-//import fr.epsi.myEpsi.dao.mockImpl.AnnonceDao;
+import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 
 /**
@@ -20,7 +22,8 @@ import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 @WebServlet("/getOffersServlet")
 public class getOffersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
+	private static final Logger logger = LogManager.getLogger(getOffersServlet.class);
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,9 +36,11 @@ public class getOffersServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doGet de la servlet getOffersServlet");
+		}
 		String login = request.getParameter("LOGIN");
-		IOfferDao offerDao = new OfferDao();
-		List<Offer> myOffers = offerDao.getOffers(login);
+		List<Offer> myOffers = OfferDao.getOffers(login);
 		
 		request.setAttribute("OFFERS", myOffers);
 		request.getRequestDispatcher("offers.jsp").forward(request, response);
