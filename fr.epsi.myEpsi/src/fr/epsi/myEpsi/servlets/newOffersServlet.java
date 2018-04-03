@@ -38,7 +38,7 @@ public class newOffersServlet extends HttpServlet {
 
         Offer offer = new Offer();
 
-        offer.setId(OfferDao.getNbOffer() + 1);
+        offer.setId(OfferDao.getMaxId() + 1);
         offer.setTitre(title);
         offer.setDescription(content);
         offer.setPrix(prix);

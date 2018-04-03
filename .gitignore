@@ -4,13 +4,22 @@
 # Log file
 *.log
 
+#DB files
+db/projet1.properties
+db/projet1.lck
+
+# IntelliJ files
 fr.epsi.myEpsi/.idea
 fr.epsi.myEpsi/out
 fr.epsi.myEpsi/fr.epsi.myEpsi.iml
+
+# Eclipse files
 fr.epsi.myEpsi/.settings
 fr.epsi.myEpsi/.classpath
 fr.epsi.myEpsi/.project
-/build/
-.settings
-.classpath
-.project
+
+
+# Tmp files
+~*
+
+
