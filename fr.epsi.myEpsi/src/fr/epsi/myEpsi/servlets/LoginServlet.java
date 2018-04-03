@@ -56,5 +56,16 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Offer> myOffers = OfferDao.getOffers("ADMIN");
+		request.setAttribute("OFFERS", myOffers);
+		request.setAttribute("USER", UserDao.getUserById("ADMIN"));
+		request.getRequestDispatcher("offers.jsp").forward(request, response);
+
+	}
 
 }
