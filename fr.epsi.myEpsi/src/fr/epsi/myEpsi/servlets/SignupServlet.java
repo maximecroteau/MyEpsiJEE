@@ -64,21 +64,21 @@ public class SignupServlet extends HttpServlet {
 					UserDao.saveUser(user);
 				}
 				else {
-					request.setAttribute("PWDERROR", "Mot de passe incorrect : Minimum 3 caract√®res et identiques entre eux");
+					request.setAttribute("PWDERROR", "Mot de passe incorrect : Minimum 3 caractËres et identiques entre eux");
 					request.getRequestDispatcher("signup.jsp").forward(request, response);
 				}
 			}
 			else {
 				logger.info("Email : NEIN ");
-				request.setAttribute("MAILERROR", "Login d√©j√† utilis√© ou incorrect");
+				request.setAttribute("MAILERROR", "Login dÈj‡† utilisÈ ou incorrect");
 				request.getRequestDispatcher("signup.jsp").forward(request, response);
 			}
 
-			request.setAttribute("OKSIGNUP", "Compte cr√©e !");
+			request.setAttribute("OKSIGNUP", "Compte crÈe !");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else {
 			logger.info("L'inscription ne va pas se faire ! ");
-			request.setAttribute("LOGINERROR", "Login d√©j√† utilis√© ou incorrect");
+			request.setAttribute("LOGINERROR", "Login dÈj‡† utilisÈ ou incorrect");
 			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
 	}
