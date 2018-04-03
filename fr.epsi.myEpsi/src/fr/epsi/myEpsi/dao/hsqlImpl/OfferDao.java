@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import fr.epsi.myEpsi.Constants;
 import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.Status;
-import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
@@ -59,9 +58,9 @@ public class OfferDao {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if(succes) {
-				toDebug.append ("Requï¿½te suivante ï¿½xï¿½cutï¿½e avec succï¿½s : ");
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
 			} else {
-				toDebug.append ("ï¿½chec de la requï¿½te suivante : ");
+				toDebug.append ("échec de la requête suivante : ");
 			}
 			toDebug.append (req);
 	    	logger.debug(toDebug);
@@ -72,7 +71,7 @@ public class OfferDao {
 		List<Offer> myOffers = new ArrayList<>();
 
 		for (Offer offer : getAllOffers()) {
-			// Vï¿½rifie si on peut la voir
+			// Vérifie si on peut la voir
 			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId().equals(loginId)) {
 				myOffers.add(offer);
 			}

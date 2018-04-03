@@ -12,10 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
-import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
 /**
  * Servlet implementation class editOfferServlet
@@ -46,7 +44,6 @@ public class editOfferServlet extends HttpServlet {
 		String userId = request.getParameter("USER");
 		String edit = request.getParameter("EDIT");
 		Offer myOffer = OfferDao.getOfferById(offerId);
-		//User user = UserDao.getUserById(userId);
 		
 		request.setAttribute("OFFER", myOffer);
 		request.setAttribute("USER", userId);

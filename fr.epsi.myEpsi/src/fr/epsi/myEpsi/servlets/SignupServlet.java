@@ -1,9 +1,7 @@
 package fr.epsi.myEpsi.servlets;
 
-import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
-import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Servlet implementation class LoginServlet

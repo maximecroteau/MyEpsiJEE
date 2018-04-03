@@ -1,7 +1,6 @@
 package fr.epsi.myEpsi.servlets;
 
 import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.beans.Status;
 import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
