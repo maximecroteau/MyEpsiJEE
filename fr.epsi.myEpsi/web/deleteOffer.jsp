@@ -21,7 +21,7 @@ String userID = (String)request.getAttribute("ID");
 	    <div class="nav-wrapper teal lighten-2">
 	        <a href="#" class="brand-logo">MyEpsiApplication</a>
 	        <ul id="nav-mobile" class="right hide-on-med-and-down">
-	            <li><a href="login.html">Deconnexion</a></li>
+	            <li><a href="fr.epsi.myEpsi/login.jsp">Deconnexion</a></li>
 	        </ul>
 	    </div>
 	</nav>

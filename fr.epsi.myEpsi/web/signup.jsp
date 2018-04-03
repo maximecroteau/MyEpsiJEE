@@ -32,7 +32,7 @@
 
     <div class="col s6 offset-s3">
         <img alt="logo EPSI" src="IMG/epsilogo.png" class="logo">
-        <form action="/SignupServlet" method="POST">
+        <form action="/fr.epsi.myEpsi//SignupServlet" method="POST">
             <!--<form action="/fr.epsi.myEpsi/LoginServlet" method="POST"> -->
             <input type="text" name="NAME" placeholder="Votre nom" autofocus><br>
             <input type="text" name="TEL" placeholder="Votre téléphone"><br>
@@ -44,7 +44,7 @@
             <button class="btn waves-effect waves-light btn-co" type="submit" name="action">S'inscrire</button>
         </form>
         <p>Déjà inscrit ?</p>
-        <a class="waves-effect waves-light btn" href="login.jsp">Connexion</a>
+        <a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/login.jsp">Connexion</a>
 
     </div>
 
