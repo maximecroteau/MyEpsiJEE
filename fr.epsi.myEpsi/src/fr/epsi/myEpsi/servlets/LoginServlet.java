@@ -24,14 +24,14 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(LoginServlet.class);
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,18 +42,18 @@ public class LoginServlet extends HttpServlet {
 		}
 		String login = request.getParameter("LOGIN");
 		String password = request.getParameter("PWD");
-		
+
 		User user = new User();
 		user.setId(login);
 		user.setPassword(password);
-		
+
 		if (UserDao.checkLogin(user)) {
 			List<Offer> myOffers = OfferDao.getOffers(login);
 			request.setAttribute("OFFERS", myOffers);
 			request.setAttribute("USER", UserDao.getUserById(login));
 			request.getRequestDispatcher("offers.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("login.html").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
 
