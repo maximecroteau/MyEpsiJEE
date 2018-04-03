@@ -172,10 +172,10 @@ public class UserDao {
 		return accesOk;
 	}
 
-	public static boolean checkIfInBase(User user) {
+	public static boolean checkIfInBase(User user, List<User> users) {
 		boolean accesOk = false;
 		User existingUser = null;
-		for (User u: getAllUsers()) {
+		for (User u: users) {
 			if (u.getId().equals(user.getId())) {
 				existingUser = u;
 				break;

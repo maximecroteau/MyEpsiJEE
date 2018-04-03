@@ -51,7 +51,7 @@ public class SignupServlet extends HttpServlet {
 		user.setPassword(password);
 		user.setAdministrateur(false);
 
-		if (UserDao.checkIfInBase(user)) {
+		if (UserDao.checkIfInBase(user, UserDao.getAllUsers())) {
 			logger.info("Login pas dans la base : OK ! ");
 
 			if(UserDao.validationEmail(login)){
