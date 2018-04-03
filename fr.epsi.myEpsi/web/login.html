@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="CSS/materialize.css" />
         <link rel="stylesheet" href="CSS/custom.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Connectez-vous !</title>
+		<title>Connectez-vous</title>
 	</head>
 	
 	<body>
@@ -19,14 +19,12 @@
 		
 			<div class="col s6 offset-s3">
 			<img alt="logo EPSI" src="IMG/epsilogo.png" class="logo">
-			<form action="/LoginServlet" method="POST">
+			<form action="LoginServlet" method="POST">
 			<!--<form action="/fr.epsi.myEpsi/LoginServlet" method="POST"> -->
-				<input type="text" name="LOGIN" placeholder="E-mail" autofocus><br>
-				<input type="password" name="PWD" placeholder="Mot de passe"><br>
-				<button class="btn waves-effect waves-light btn-co" type="submit" name="action">Connexion</button>
+				<input type="text" name="LOGIN"><br>
+				<input type="password" name="PWD"><br>
+				<button class="btn waves-effect waves-light btn-co" type="submit" name="action">Se Connecter</button>
 			</form>
-				<p>Pas encore sur MyEpsi ?</p>
-				<a class="waves-effect waves-light btn" href="signup.html">S'inscrire</a>
 			</div>
 			
 		</div>
