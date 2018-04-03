@@ -36,7 +36,7 @@
             <button class="btn waves-effect waves-light btn-co" type="submit" name="action">Connexion</button>
         </form>
         <p>Pas encore sur MyEpsi ?</p>
-        <a class="waves-effect waves-light btn" href="fr.epsi.myEpsi/signup.jsp">S'inscrire</a>
+        <a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/signup.jsp">S'inscrire</a>
     </div>
 
 </div>
