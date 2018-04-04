@@ -24,7 +24,7 @@
 </nav>
 
 
-<div class="row login">
+<div class="row mt50">
 
     <div class="col s6 offset-s3">
         <img alt="logo EPSI" src="IMG/epsilogo.png" class="logo">

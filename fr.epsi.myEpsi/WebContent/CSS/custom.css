@@ -1,5 +1,13 @@
-.login{
+.mt50{
 	margin-top: 50px;
+}
+
+.mb20{
+	margin-bottom: 20px;
+}
+
+.ib{
+	display: inline-block;
 }
 
 .btn-co{
@@ -14,4 +22,12 @@
     max-height: 200px;
     display: block;
     margin-bottom: 100px;
+}
+
+h1,h2,h3,h4{
+	margin-left: 20px;
+}
+
+th,td{
+	text-align: center !important;
 }

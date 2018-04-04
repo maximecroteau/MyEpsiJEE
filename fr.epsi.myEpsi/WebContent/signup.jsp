@@ -33,7 +33,6 @@
     <div class="col s6 offset-s3">
         <img alt="logo EPSI" src="IMG/epsilogo.png" class="logo">
         <form action="/fr.epsi.myEpsi//SignupServlet" method="POST">
-            <!--<form action="/fr.epsi.myEpsi/LoginServlet" method="POST"> -->
             <input type="text" name="NAME" placeholder="Votre nom" autofocus><br>
             <input type="text" name="TEL" placeholder="Votre téléphone"><br>
             <input type="text" name="LOGIN" placeholder="Votre e-mail"><br>
