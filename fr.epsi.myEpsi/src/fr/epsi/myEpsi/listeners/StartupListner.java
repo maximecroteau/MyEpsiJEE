@@ -49,6 +49,7 @@ public class StartupListner implements ServletContextListener {
 	
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
+		System.out.println("ok");
 		if(logLevel.actualLogLevel <= logLevel.INFO) {
 			logger.info("Démarrage de l'application");
 		}

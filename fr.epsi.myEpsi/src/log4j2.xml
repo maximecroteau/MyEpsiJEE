@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <Configuration status="WARN" name="myEpsi">
   <Properties>
     <Property name="filename">myEpsi.log</Property>
@@ -9,7 +10,7 @@
     </Console>
 	<RollingFile name="RollingFile">
 		  <FileName>${filename}</FileName>
-		  <FilePattern>myEpsiLogs/%d{yyyy-MM-dd} ${filename}</FilePattern>
+		  <FilePattern>./myEpsiLogs/%d{yyyy-MM-dd}_${filename}</FilePattern>
 		  <PatternLayout>
 		    	<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS a} [%t] %-5level %logger{36} - %msg%n</Pattern>
 		  </PatternLayout>
