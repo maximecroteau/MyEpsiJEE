@@ -32,7 +32,7 @@
 	
 	<h4>Les détails de l'annonce :</h4>
 	
-	<form action="/fr.epsi.myEpsi/modifyOffersServlet" id="editOffer" method="POST">
+	<form action="/fr.epsi.myEpsi/editOfferServlet" id="editOffer" method="POST">
 		<div class="row mt50">
 
 			<% if(myOffer.getVendeur().getId().equals(userID)){ %>

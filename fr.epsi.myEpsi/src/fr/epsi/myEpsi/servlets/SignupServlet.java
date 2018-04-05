@@ -26,7 +26,6 @@ public class SignupServlet extends HttpServlet {
 	 */
 	public SignupServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -37,7 +36,7 @@ public class SignupServlet extends HttpServlet {
 			logger.info("Appel doPost de la servlet SignupServlet");
 		}
 
-		/*REPWD permet de voir si les deux mots de passe correspondent lors de la saisie*/
+		/* REPWD permet de voir si les deux mots de passe correspondent lors de la saisie */
 		String name = request.getParameter("NAME");
 		String tel = request.getParameter("TEL");
 		String login = request.getParameter("LOGIN");
@@ -51,33 +50,25 @@ public class SignupServlet extends HttpServlet {
 		user.setPassword(password);
 		user.setAdministrateur(false);
 
-		if (UserDao.checkIfInBase(user, UserDao.getAllUsers())) {
-			logger.info("Login pas dans la base : OK ! ");
-
-			if(UserDao.validationEmail(login)){
-				logger.info("Email : OK ");
-				if(UserDao.validationMotDePasse(password, repassword)){
-					logger.info("Password : OK ");
-					UserDao.saveUser(user);
-				}
-				else {
-					request.setAttribute("PWDERROR", "Mot de passe incorrect : Minimum 3 caractères et identiques entre eux");
-					request.getRequestDispatcher("signup.jsp").forward(request, response);
-				}
-			}
-			else {
-				logger.info("Email : NEIN ");
-				request.setAttribute("MAILERROR", "Login déjà  utilisé ou incorrect");
-				request.getRequestDispatcher("signup.jsp").forward(request, response);
-			}
-
+		boolean alreadyExist = UserDao.checkIfInBase(user, UserDao.getAllUsers());
+		boolean emailOK = UserDao.validationEmail(login);
+		boolean mdpOK = UserDao.validationMotDePasse(password, repassword);
+		
+		if (alreadyExist && emailOK && mdpOK) {
+			UserDao.saveUser(user);
 			request.setAttribute("OKSIGNUP", "Compte crée !");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
-		} else {
-			logger.info("L'inscription ne va pas se faire ! ");
-			request.setAttribute("LOGINERROR", "Login déjà  utilisé ou incorrect");
+		} else if(!mdpOK) {
+			request.setAttribute("PWDERROR", "Mot de passe incorrect : Il doit contenir au minimum 3 caractères et les 2 mots de passe doivent être identiques entre eux");
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
+		} else if(!emailOK){
+			request.setAttribute("MAILERROR", "Login incorrect");
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
+		} else if(alreadyExist){
+			request.setAttribute("LOGINERROR", "Login déjà  utilisé");
 			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
+
 	}
 
 }

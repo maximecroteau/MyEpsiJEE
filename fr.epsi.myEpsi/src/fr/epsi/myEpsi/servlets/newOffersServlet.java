@@ -27,7 +27,7 @@ public class newOffersServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(logLevel.actualLogLevel <= logLevel.INFO) {
-			logger.info("Appel doGet de la servlet newOffersServlet");
+			logger.info("Appel doPost de la servlet newOffersServlet");
 		}
 		
 		
@@ -60,6 +60,13 @@ public class newOffersServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doGet de la servlet newOffersServlet");
+		}
+    	
+    	String userID = request.getParameter("ID");
 
+		request.setAttribute("ID", userID);
+		request.getRequestDispatcher("newOffer.jsp").forward( request, response );
     }
 }

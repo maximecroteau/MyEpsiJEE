@@ -28,18 +28,17 @@ public class deleteOfferServlet extends HttpServlet {
 	 */
 	public deleteOfferServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (logLevel.actualLogLevel <= logLevel.INFO) {
 			logger.info("Appel doGet de la servlet deleteOfferServlet");
 		}
+		
 		String offerId = request.getParameter("ID");
 		Offer myOffer = OfferDao.getOfferById(offerId);
 

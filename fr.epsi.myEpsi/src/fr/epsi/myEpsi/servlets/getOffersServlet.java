@@ -29,7 +29,6 @@ public class getOffersServlet extends HttpServlet {
      */
     public getOffersServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

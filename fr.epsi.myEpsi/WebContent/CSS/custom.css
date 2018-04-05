@@ -35,3 +35,10 @@ h1,h2,h3,h4{
 th,td{
 	text-align: center !important;
 }
+
+[type="radio"]:not(:checked), [type="radio"]:checked {
+ 	position: absolute;
+	pointer-events: visible !important;
+	margin-top: 18px;
+    margin-left: 18px;
+}
