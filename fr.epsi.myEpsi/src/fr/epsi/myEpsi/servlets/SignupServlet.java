@@ -56,7 +56,7 @@ public class SignupServlet extends HttpServlet {
 		
 		if (alreadyExist && emailOK && mdpOK) {
 			UserDao.saveUser(user);
-			request.setAttribute("OKSIGNUP", "Compte crée !");
+			request.setAttribute("OKSIGNUP", "Compte créé !");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else if(!mdpOK) {
 			request.setAttribute("PWDERROR", "Mot de passe incorrect : Il doit contenir au minimum 3 caractères et les 2 mots de passe doivent être identiques entre eux");

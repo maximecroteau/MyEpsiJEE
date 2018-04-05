@@ -35,7 +35,7 @@
 
     <div class="col s6 offset-s3">
         <img alt="logo EPSI" src="IMG/epsilogo.png" class="logo mt50">
-        <form action="/fr.epsi.myEpsi/SignupServlet" id="createOffer" method="POST">
+        <form action="/fr.epsi.myEpsi/SignupServlet" id="newUser" method="POST">
 			<div class="row">
 				<div class="input-field col s12">
 					<input type="text" id="name" name="NAME" class="active"> 
@@ -60,14 +60,14 @@
 					<label class="active" for="pwd">Votre mot de passe</label>
 				</div>
 				<div class="input-field col s12">
-					<input type="password" id="pwd" name="PWD">
-					<label class="active" for="pwd">Confirmez votre mot de passe</label>
+					<input type="password" id="repwd" name="REPWD">
+					<label class="active" for="repwd">Confirmez votre mot de passe</label>
 				</div>
 				<div class="col s3 offset-s2">
 					<a class="waves-effect waves-light btn" onclick="window.history.back();"><i class="material-icons left">arrow_back</i>Retour</a>
 				</div>
 				<div class="col s3 offset-s3 ib">
-					<a class="waves-effect waves-light btn" type="submit"><i class="material-icons left">check</i>S'inscrire</a>
+					<a class="waves-effect waves-light btn" onclick="validateForm();"><i class="material-icons left">check</i>S'inscrire</a>
 				</div>
 			</div>
 		</form>
@@ -75,5 +75,10 @@
  	</div>
 
 </div>
+<script type="text/javascript">
+	function validateForm() {
+	    document.getElementById('newUser').submit();
+	}
+</script>
 </body>
 </html>
