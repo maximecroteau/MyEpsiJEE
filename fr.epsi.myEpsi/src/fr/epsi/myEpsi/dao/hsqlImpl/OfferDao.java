@@ -18,8 +18,7 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 public class OfferDao {
 	private static final Logger logger = LogManager.getLogger(OfferDao.class);
 
-	private static void logUpdate(boolean succes, int id, String titre, String description, int statut, Double prix,
-			Date modification, SQLException e) {
+	private static void logUpdate(boolean succes, int id, String titre, String description, int statut, Double prix, Date modification, SQLException e) {
 		if (logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if (succes) {
@@ -40,9 +39,9 @@ public class OfferDao {
 		if(logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if(succes) {
-				toDebug.append ("Requï¿½te suivante ï¿½xï¿½cutï¿½e avec succï¿½s : ");
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
 			} else {
-				toDebug.append ("ï¿½chec de la requï¿½te suivante : ");
+				toDebug.append ("Échec de la requête suivante : ");
 			}
 			toDebug.append ("INSERT INTO ANNONCES (ID , TITLE , CONTENT , PRICE , USER_ID , CREATION_DATE , STATUS , NB_VIEW , UPDATE_DATE) ");
 			toDebug.append ("VALUES (" + id + " , \"" + titre + "\" , \"" + description + "\" , " + prix + " , \"" + idVendeur+ "\" , \"" + creation + "\" , " + statut + " , 0 , \"" + creation + "\")");
@@ -63,6 +62,25 @@ public class OfferDao {
 				toDebug.append ("échec de la requête suivante : ");
 			}
 			toDebug.append (req);
+			if(!succes) {
+				toDebug.append(" : " + e);
+			}
+	    	logger.debug(toDebug);
+	    }
+	}
+	
+	private static void logDelete(boolean succes, int id, SQLException e) {
+		if(logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if(succes) {
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append ("échec de la requête suivante : ");
+			}
+			toDebug.append ("UPDATE ANNONCES SET STATUS = 3 WHERE ID = " + id);
+			if(!succes) {
+				toDebug.append(" : " + e);
+			}
 	    	logger.debug(toDebug);
 	    }
 	}
@@ -71,7 +89,7 @@ public class OfferDao {
 		List<Offer> myOffers = new ArrayList<>();
 
 		for (Offer offer : getAllOffers()) {
-			// Vérifie si on peut la voir
+			// Annonce publiées ou créées par l'utilisateur
 			if (offer.getStatut() == Status.PUBLIE || offer.getVendeur().getId().equals(loginId)) {
 				myOffers.add(offer);
 			}
@@ -106,30 +124,29 @@ public class OfferDao {
 				}
 				offer.setPrix(results.getDouble(11));
 			}
-			logSelect(true, req.replace("?", id), null);
+			logSelect(true, req.replace("?", "\""+id+"\""), null);
 			con.close();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			logSelect(false, req.replace("?", "\""+id+"\""), e);
 		}
 		return offer;
 	}
 
-	public static void deleteOffer(String id) {
-		String req = "DELETE FROM ANNONCES WHERE ID = ?";
+	public static void deleteOffer(int id) {
 		Connection con;
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+					
+			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET STATUS = ? WHERE ID = ?");
 
-			PreparedStatement psmt = con.prepareStatement(req);
-			psmt.setString(1, id);
+			psmt.setInt(1, 3);
+			psmt.setInt(2, id);
 			psmt.executeUpdate();
-
-			logSelect(true, req.replace("?", "\""+id+"\""), null);
+			
+			logDelete(true, id, null);
 			con.close();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			logSelect(false, req.replace("?", "\""+id+"\""), e);
+			logDelete(false, id, e);
 		}
 
 	}
@@ -247,12 +264,10 @@ public class OfferDao {
 			psmt.setDate(5, DateSQL);
 			psmt.setInt(6, newOffer.getId());
 			psmt.executeUpdate();
-			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
-					newOffer.getPrix(), DateSQL, null);
+			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), DateSQL, null);
 			con.close();
 		} catch (SQLException e) {
-			logUpdate(false, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),
-					newOffer.getPrix(), new java.sql.Date(newOffer.getModification().getTime()), e);
-	}
+			logUpdate(false, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), new java.sql.Date(newOffer.getModification().getTime()), e);
 		}
+	}
 }
