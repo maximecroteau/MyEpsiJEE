@@ -44,7 +44,16 @@ public class editOfferServlet extends HttpServlet {
 		String offerId = request.getParameter("ID");
 		String userId = request.getParameter("USER");
 		String edit = request.getParameter("EDIT");
+		
 		Offer myOffer = OfferDao.getOfferById(offerId);
+		String vendeurId = myOffer.getVendeur().getId();
+		
+		if(!vendeurId.equals(userId) && edit.equals("0")) {
+			myOffer.setNbVues(myOffer.getNbVues()+1);
+			OfferDao.updateOffer(myOffer);
+			
+			myOffer = OfferDao.getOfferById(offerId);
+		}
 		
 		request.setAttribute("OFFER", myOffer);
 		request.setAttribute("USER", userId);

@@ -18,7 +18,7 @@ import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 public class OfferDao {
 	private static final Logger logger = LogManager.getLogger(OfferDao.class);
 
-	private static void logUpdate(boolean succes, int id, String titre, String description, int statut, Double prix, Date modification, SQLException e) {
+	private static void logUpdate(boolean succes, int id, String titre, String description, int statut, Double prix, long nbVues, Date modification, SQLException e) {
 		if (logLevel.actualLogLevel == logLevel.DEBUG) {
 			StringBuilder toDebug = new StringBuilder();
 			if (succes) {
@@ -26,7 +26,7 @@ public class OfferDao {
 			} else {
 				toDebug.append("Échec de la requête suivante : ");
 			}
-			toDebug.append("UPDATE ANNONCES SET TITLE = \""+ titre +"\", CONTENT = \""+ description +"\", PRICE = "+prix+ ", STATUS = "+statut+", UPDATE_DATE = \""+modification+"\" WHERE ID = "+id);
+			toDebug.append("UPDATE ANNONCES SET TITLE = \"" + titre + "\", CONTENT = \"" + description + "\", PRICE = " + prix + ", STATUS = "+ statut +", UPDATE_DATE = \"" + modification + "\", NB_VIEW = " + nbVues + " WHERE ID = " + id);
 			if (!succes) {
 				toDebug.append(" : " + e);
 			}
@@ -133,6 +133,7 @@ public class OfferDao {
 				offer.setVendeur(UserDao.getUserById(results.getString(4)));
 				offer.setCreation(results.getDate(5));
 				offer.setModification(results.getDate(6));
+				offer.setNbVues(results.getInt(10));
 				offer.setStatut(results.getInt(7));
 				if (results.getString(8) != null) {
 					offer.setAcheteur(UserDao.getUserById(results.getString(8)));
@@ -208,6 +209,7 @@ public class OfferDao {
 		    	offer.setVendeur(UserDao.getUserById(results.getString(4)));
 		    	offer.setCreation(results.getDate(5));
 		    	offer.setModification(results.getDate(6));
+		    	offer.setNbVues(results.getInt(10));
 		    	offer.setStatut(results.getInt(7));
 		    	if(results.getString(8) != null) {
 		    		offer.setAcheteur(UserDao.getUserById(results.getString(8)));
@@ -290,7 +292,7 @@ public class OfferDao {
 		try {
 			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
 					
-			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET TITLE = ?, CONTENT = ?, PRICE = ?, STATUS = ?, UPDATE_DATE = ? WHERE ID = ?");
+			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET TITLE = ?, CONTENT = ?, PRICE = ?, STATUS = ?, UPDATE_DATE = ?, NB_VIEW = ? WHERE ID = ?");
 
 			psmt.setString(2, newOffer.getDescription());
 			psmt.setString(1, newOffer.getTitre());
@@ -302,12 +304,13 @@ public class OfferDao {
 			java.sql.Date DateSQL = new java.sql.Date(newOffer.getModification().getTime());
 			psmt.setInt(4, newOffer.getStatut());
 			psmt.setDate(5, DateSQL);
-			psmt.setInt(6, newOffer.getId());
+			psmt.setInt(6, (int)newOffer.getNbVues());
+			psmt.setInt(7, newOffer.getId());
 			psmt.executeUpdate();
-			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), DateSQL, null);
+			logUpdate(true, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), newOffer.getNbVues(), DateSQL, null);
 			con.close();
 		} catch (SQLException e) {
-			logUpdate(false, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), new java.sql.Date(newOffer.getModification().getTime()), e);
+			logUpdate(false, newOffer.getId(), newOffer.getTitre(), newOffer.getDescription(), newOffer.getStatut(),newOffer.getPrix(), newOffer.getNbVues(), new java.sql.Date(newOffer.getModification().getTime()), e);
 		}
 	}
 }

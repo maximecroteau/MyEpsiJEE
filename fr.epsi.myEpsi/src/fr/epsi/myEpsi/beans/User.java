@@ -8,6 +8,12 @@ public class User {
 	private String telephone;
 	private boolean administrateur;
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", nom=" + nom + ", password=" + password + ", telephone=" + telephone + ", administrateur=" + administrateur + "]";
+	}
+
+	
 	public User() {
 		administrateur = false;
 	}
