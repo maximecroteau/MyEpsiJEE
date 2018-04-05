@@ -40,10 +40,10 @@ public class deleteOfferServlet extends HttpServlet {
 		}
 		
 		String offerId = request.getParameter("ID");
-		Offer myOffer = OfferDao.getOfferById(offerId);
+		String userID = OfferDao.getOfferById(offerId).getVendeur().getId();
+		OfferDao.deleteOffer(Integer.valueOf(offerId));
 
-		request.setAttribute("OFFER", myOffer);
-		request.getRequestDispatcher("deleteOffer.jsp").forward(request, response);
+		request.getRequestDispatcher("getOffersServlet?LOGIN=" + userID).forward(request, response);
 
 	}
 

@@ -15,6 +15,8 @@
 	<link rel="stylesheet" href="CSS/materialize.css" />
 	<link rel="stylesheet" href="CSS/custom.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title><%out.print((edit == 1 ? "Modification" : "Consultation") + " d'annonce");%></title>
 </head>
@@ -37,10 +39,12 @@
 
 			<% if(myOffer.getVendeur().getId().equals(userID)){ %>
 				<div class="col s3 offset-s8">
-					<% if (edit != 1) { %>
-						<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=myOffer.getId()%>&USER=<%=userID%>&EDIT=1"><i class="material-icons">edit</i></a>
+					<% if (myOffer.getStatut() == Status.PUBLIE || myOffer.getStatut() == Status.TEMPORAIRE) { %>
+						<% if (edit != 1) { %>
+							<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=myOffer.getId()%>&USER=<%=userID%>&EDIT=1"><i class="material-icons">edit</i></a>
+						<% } %>
+					 	<a class="waves-effect waves-light btn modal-trigger" href="#modalDelete"><i class="material-icons">delete</i></a>
 					<% } %>
-					 <a class="waves-effect waves-light btn modal-trigger" href="#modalDelete"><i class="material-icons">delete</i></a>
 				</div>
 			<% } else { %>
 				<div class="col s3 offset-s8">
@@ -112,15 +116,20 @@
   <div id="modalDelete" class="modal">
     <div class="modal-content">
       <h4>Confirmer la suppression</h4>
-      <p>Voulez-vous vraiment supprimer l'annonce <%=myOffer.getTitre()%> ? </p>
+      <p class="ml20">Voulez-vous vraiment supprimer l'annonce <%=myOffer.getTitre()%> ? </p>
     </div>
     <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=myOffer.getId()%>&USER=<%=userID%>"><i class="material-icons">Oui</i></a>
+      <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=myOffer.getId()%>">Oui</a>
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
     </div>
   </div>
   
 	<script type="text/javascript">
+
+		$(document).ready(function(){
+	    	$('.modal').modal();
+	  	});
+
 		function validateForm() {
 		    var form = document.getElementById('editOffer');
 		    if (form.TITLE.value == "") {

@@ -1,5 +1,6 @@
 <%@page import="fr.epsi.myEpsi.beans.Offer"%>
 <%@page import="fr.epsi.myEpsi.beans.User"%>
+<%@page import="fr.epsi.myEpsi.beans.Status"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
@@ -15,6 +16,8 @@
 	<link rel="stylesheet" href="CSS/materialize.css" />
 	<link rel="stylesheet" href="CSS/custom.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Mes annonces</title>
 </head>
@@ -51,9 +54,16 @@
 				<td>
 					<% if(offer.getVendeur().getId().equals(user.getId())){ %>
 						<i class="material-icons">account_circle</i>
+						<% if(offer.getStatut() == Status.ANNULE){ %>
+							<i class="material-icons rouge">delete</i>
+						<% } %>
+						<% if(offer.getStatut() == Status.VENDU){ %>
+							<i class="material-icons vert">done</i>
+						<% } %>
 					<% } else { %>
 						<i class="material-icons">people</i>
 					<% } %>
+
 				</td>
 				<td><%=offer.getTitre()%></td>
 				<td><%=offer.getDescription()%></td>
@@ -61,7 +71,7 @@
 				<td><%=dateFormat.format(offer.getCreation())%></td>
 				<td>
 					<a class='waves-effect waves-light btn' href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>&EDIT=0"><i class="material-icons">visibility</i></a>
-					<% if(offer.getVendeur().getId().equals(user.getId())){ %>
+					<% if((offer.getVendeur().getId().equals(user.getId())) && (offer.getStatut() == Status.PUBLIE || offer.getStatut() == Status.TEMPORAIRE) ){ %>
 						<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>&EDIT=1"><i class="material-icons">edit</i></a>
 						<a class="waves-effect waves-light btn modal-trigger" href="#modalDelete<%=offer.getId()%>"><i class="material-icons">delete</i></a>
 					<% } %>
@@ -82,10 +92,10 @@
 		  <div id="modalDelete<%=offer.getId()%>" class="modal">
 		    <div class="modal-content">
 		      <h4>Confirmer la suppression</h4>
-		      <p>Voulez-vous vraiment supprimer l'annonce <%=offer.getTitre()%> ? </p>
+		      <p class="ml20">Voulez-vous vraiment supprimer l'annonce <%=offer.getTitre()%> ? </p>
 		    </div>
 		    <div class="modal-footer">
-		      <a class="modal-action waves-effect waves-green btn-flat" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>"><i class="material-icons">Oui</i></a>
+		      <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>">Oui</a>
 		      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
 		    </div>
 		  </div>
@@ -96,8 +106,7 @@
 	    	$('.modal').modal();
 	  	});
 	</script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="JS/materialize.js"></script>
+	
 	
 </body>
 </html>

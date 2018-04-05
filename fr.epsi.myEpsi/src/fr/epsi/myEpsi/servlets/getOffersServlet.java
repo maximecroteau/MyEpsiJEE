@@ -13,8 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.epsi.myEpsi.beans.Offer;
+import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
+import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
 /**
  * Servlet implementation class getAnnoncesServlet
@@ -40,8 +42,10 @@ public class getOffersServlet extends HttpServlet {
 		}
 		String login = request.getParameter("LOGIN");
 		List<Offer> myOffers = OfferDao.getOffers(login);
+		User myUser = UserDao.getUserById(login);
 		
 		request.setAttribute("OFFERS", myOffers);
+		request.setAttribute("USER", myUser);
 		request.getRequestDispatcher("offers.jsp").forward(request, response);
 	}
 

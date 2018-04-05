@@ -6,8 +6,19 @@
 	margin-bottom: 20px;
 }
 
+.ml20{
+	margin-left: 20px;
+}
 .error{
 	color: red;
+}
+
+.rouge{
+	color: red;
+}
+
+.vert{
+	color: green;
 }
 
 .ib{
