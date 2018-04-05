@@ -85,6 +85,22 @@ public class OfferDao {
 	    }
 	}
 	
+	private static void logSell(boolean succes, int id, String buyer, java.sql.Date Date, SQLException e) {
+		if(logLevel.actualLogLevel == logLevel.DEBUG) {
+			StringBuilder toDebug = new StringBuilder();
+			if(succes) {
+				toDebug.append ("Requête suivante éxécutée avec succès : ");
+			} else {
+				toDebug.append ("échec de la requête suivante : ");
+			}
+			toDebug.append ("UPDATE ANNONCES SET STATUS = 2, BUYER = \"" + buyer + "\", PURCHASE_DATE = \"" + Date + "\" WHERE ID = " + id);
+			if(!succes) {
+				toDebug.append(" : " + e);
+			}
+	    	logger.debug(toDebug);
+	    }
+	}
+	
 	public static List<Offer> getOffers(String loginId){
 		List<Offer> myOffers = new ArrayList<>();
 
@@ -147,6 +163,30 @@ public class OfferDao {
 			con.close();
 		} catch (SQLException e) {
 			logDelete(false, id, e);
+		}
+
+	}
+	
+	public static void sellOffer(int id, String buyer) {
+		Connection con;
+		java.util.Date dateJava = new java.util.Date();
+        java.sql.Date DateSQL = new java.sql.Date(dateJava.getTime());
+        
+		try {
+			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+					
+			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET STATUS = ?, BUYER = ?, PURCHASE_DATE = ? WHERE ID = ?");
+
+			psmt.setInt(1, 2);
+			psmt.setString(2, buyer);
+			psmt.setDate(3, DateSQL);
+			psmt.setInt(4, id);
+			psmt.executeUpdate();
+			
+			logSell(true, id, buyer, DateSQL, null);
+			con.close();
+		} catch (SQLException e) {
+			logSell(false, id, buyer, DateSQL, e);
 		}
 
 	}

@@ -168,7 +168,6 @@ public class UserDao {
 				logger.error("La connexion a été refusée à l'utilisateur " + user.getId() + ".");
 			}
 		}
-		logger.info("Accesok " + accesOk);
 		return accesOk;
 	}
 

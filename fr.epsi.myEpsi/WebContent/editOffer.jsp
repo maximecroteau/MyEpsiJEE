@@ -48,7 +48,7 @@
 				</div>
 			<% } else { %>
 				<div class="col s3 offset-s8">
-					<a class="waves-effect waves-light btn" href="#"><i class="material-icons left">shopping_cart</i>Je l'achète !</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modalBuy"><i class="material-icons left">shopping_cart</i>Je l'achète !</a>
 				</div>
 			<% } %>
 			<div class="input-field col s6 offset-s2">
@@ -112,7 +112,7 @@
 		</div>
 	</form>
 
-  <!-- Modal Structure -->
+  <!-- Modal Structure Delete -->
   <div id="modalDelete" class="modal">
     <div class="modal-content">
       <h4>Confirmer la suppression</h4>
@@ -120,6 +120,18 @@
     </div>
     <div class="modal-footer">
       <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=myOffer.getId()%>">Oui</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
+    </div>
+  </div>
+  
+   <!-- Modal Structure Buy -->
+  <div id="modalBuy" class="modal">
+    <div class="modal-content">
+      <h4>Confirmer l'achat</h4>
+      <p class="ml20">Voulez-vous vraiment acheter l'objet de l'annonce <%=myOffer.getTitre()%> ? </p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/buyOfferServlet?ID=<%=myOffer.getId()%>&BUYER=<%=userID%>"><i class="material-icons left">shopping_cart</i>Oui</a>
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
     </div>
   </div>
