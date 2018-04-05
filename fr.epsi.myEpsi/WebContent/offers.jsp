@@ -79,6 +79,8 @@
 				<td>
 					<% if(!offer.getVendeur().getId().equals(user.getId())){ %>
 						<a class="waves-effect waves-light btn modal-trigger" href="#modalBuy<%=offer.getId()%>"><i class="material-icons left">shopping_cart</i>Je l'achète !</a>
+					<% } else if(offer.getStatut() == Status.VENDU) { %>
+						Vendue à <b><%=offer.getAcheteur().getNom()%></b>
 					<% } %>
 				</td>
 			</tr>
