@@ -27,7 +27,7 @@ public class newOffersServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(logLevel.actualLogLevel <= logLevel.INFO) {
-			logger.info("Appel doGet de la servlet newOffersServlet");
+			logger.info("Appel doPost de la servlet newOffersServlet");
 		}
 		
 		
@@ -35,6 +35,7 @@ public class newOffersServlet extends HttpServlet {
         String content = request.getParameter("CONTENT");
         Double prix = Double.parseDouble(request.getParameter("PRICE"));
         String idVendeur = request.getParameter("USER");
+        int status = Integer.valueOf(request.getParameter("STATUS"));
 
         Offer offer = new Offer();
 
@@ -42,6 +43,7 @@ public class newOffersServlet extends HttpServlet {
         offer.setTitre(title);
         offer.setDescription(content);
         offer.setPrix(prix);
+        offer.setStatut(status);
         
         java.util.Date dateJava = new java.util.Date();
         java.sql.Date DateSQL = new java.sql.Date(dateJava.getTime());
@@ -60,6 +62,13 @@ public class newOffersServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if(logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doGet de la servlet newOffersServlet");
+		}
+    	
+    	String userID = request.getParameter("ID");
 
+		request.setAttribute("ID", userID);
+		request.getRequestDispatcher("newOffer.jsp").forward( request, response );
     }
 }

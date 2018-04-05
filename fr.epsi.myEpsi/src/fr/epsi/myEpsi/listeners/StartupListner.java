@@ -76,7 +76,7 @@ public class StartupListner implements ServletContextListener {
 	    
 	    try {
 	      name = new ObjectName("fr.epsi.myEpsi.jmx:type=PremierMBean");
-	      Premier mbean = new Premier(logLevel.getLevel());
+	      Premier mbean = new Premier();
 	      mbs.registerMBean(mbean, name);
 	    } catch (MalformedObjectNameException e) {
 	    	e.printStackTrace();

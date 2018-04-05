@@ -1,8 +1,6 @@
 package fr.epsi.myEpsi.servlets;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,41 +10,39 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.epsi.myEpsi.beans.Offer;
-import fr.epsi.myEpsi.beans.User;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
-import fr.epsi.myEpsi.dao.hsqlImpl.UserDao;
 
 /**
- * Servlet implementation class getAnnoncesServlet
+ * Servlet implementation class buyOfferServlet
  */
-@WebServlet("/getOffersServlet")
-public class getOffersServlet extends HttpServlet {
+@WebServlet("/buyOfferServlet")
+public class buyOfferServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private static final Logger logger = LogManager.getLogger(getOffersServlet.class);
+	private static final Logger logger = LogManager.getLogger(buyOfferServlet.class);
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public getOffersServlet() {
+    public buyOfferServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(logLevel.actualLogLevel <= logLevel.INFO) {
-			logger.info("Appel doGet de la servlet getOffersServlet");
+		if (logLevel.actualLogLevel <= logLevel.INFO) {
+			logger.info("Appel doGet de la servlet buyOfferServlet");
 		}
-		String login = request.getParameter("LOGIN");
-		List<Offer> myOffers = OfferDao.getOffers(login);
-		User myUser = UserDao.getUserById(login);
 		
-		request.setAttribute("OFFERS", myOffers);
-		request.setAttribute("USER", myUser);
-		request.getRequestDispatcher("offers.jsp").forward(request, response);
+		String offerId = request.getParameter("ID");
+		String buyerId = request.getParameter("BUYER");
+
+		OfferDao.sellOffer(Integer.parseInt(offerId), buyerId);
+
+		request.getRequestDispatcher("getOffersServlet?LOGIN=" + buyerId).forward(request, response);
 	}
 
 }

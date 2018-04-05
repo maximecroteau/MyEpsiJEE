@@ -165,10 +165,9 @@ public class UserDao {
 		}
 		if(!accesOk) {
 			if(logLevel.actualLogLevel <= logLevel.ERROR) {
-				logger.error("La connexion a ete refusee a l'utilisateur " + user.getId() + ".");
+				logger.error("La connexion a été refusée à l'utilisateur " + user.getId() + ".");
 			}
 		}
-		logger.info("Accesok " + accesOk);
 		return accesOk;
 	}
 
@@ -184,10 +183,7 @@ public class UserDao {
 		if (existingUser == null) {
 			accesOk = true;
 		}
-
-		logger.info("Accesok " + accesOk);
 		return accesOk;
-
 	}
 
 	/**
@@ -197,9 +193,6 @@ public class UserDao {
 		boolean isOK = false;
 		if ( email != null && email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
 			isOK = true;
-		}
-		else {
-			logger.info( "Merci de saisir une adresse mail valide." );
 		}
 		return isOK;
 	}
@@ -213,10 +206,7 @@ public class UserDao {
 			if ( motDePasse.length() >= 3 && motDePasse.equals(reMotDePasse) ) {
 				isOK = true;
 			}
-		} else {
-			logger.info( "Merci de saisir votre mot de passe correctement." );
 		}
-
 		return isOK;
 	}
 

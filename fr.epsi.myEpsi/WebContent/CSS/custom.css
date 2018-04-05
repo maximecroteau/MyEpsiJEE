@@ -1,5 +1,32 @@
-.login{
+.mt50{
 	margin-top: 50px;
+}
+
+.mb20{
+	margin-bottom: 20px;
+}
+
+.ml20{
+	margin-left: 20px;
+}
+.error{
+	color: red;
+}
+
+.rouge{
+	color: red;
+}
+
+.vert{
+	color: green;
+}
+
+.brand-logo{
+	margin-left: 15px;
+}
+
+.ib{
+	display: inline-block;
 }
 
 .btn-co{
@@ -14,4 +41,19 @@
     max-height: 200px;
     display: block;
     margin-bottom: 100px;
+}
+
+h1,h2,h3,h4{
+	margin-left: 20px;
+}
+
+th,td{
+	text-align: center !important;
+}
+
+[type="radio"]:not(:checked), [type="radio"]:checked {
+ 	position: absolute;
+	pointer-events: visible !important;
+	margin-top: 18px;
+    margin-left: 18px;
 }
