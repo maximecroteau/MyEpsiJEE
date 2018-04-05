@@ -21,6 +21,10 @@
 	color: green;
 }
 
+.brand-logo{
+	margin-left: 15px;
+}
+
 .ib{
 	display: inline-block;
 }

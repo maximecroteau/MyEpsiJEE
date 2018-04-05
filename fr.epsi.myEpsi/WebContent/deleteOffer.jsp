@@ -9,6 +9,7 @@
 <html>
 <head>
  	<link rel="stylesheet" href="CSS/materialize.css" />
+ 	<link rel="stylesheet" href="CSS/custom.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Ajout d'annonce</title>
 </head>
