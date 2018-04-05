@@ -6,6 +6,10 @@
 	margin-bottom: 20px;
 }
 
+.error{
+	color: red;
+}
+
 .ib{
 	display: inline-block;
 }

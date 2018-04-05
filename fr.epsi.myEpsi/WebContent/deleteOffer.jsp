@@ -3,8 +3,8 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-@SuppressWarnings("unchecked")
-Offer myOffer = (Offer)request.getAttribute("OFFER");
+	Offer myOffer = (Offer)request.getAttribute("OFFER");
+	String userID = (String)request.getAttribute("ID");
 %>
 <html>
 <head>
@@ -12,30 +12,31 @@ Offer myOffer = (Offer)request.getAttribute("OFFER");
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Ajout d'annonce</title>
 </head>
-<%
-String userID = (String)request.getAttribute("ID");
-%>
+
 <body>
 
 	<nav>
 	    <div class="nav-wrapper teal lighten-2">
-	        <a href="#" class="brand-logo">MyEpsiApplication</a>
+	        <a href="#" class="brand-logo">MyEpsi Application</a>
 	        <ul id="nav-mobile" class="right hide-on-med-and-down">
 	            <li><a href="/fr.epsi.myEpsi/login.jsp">Deconnexion</a></li>
 	        </ul>
 	    </div>
 	</nav>
 
-<%  out.println("<center >");
-	out.println("<tbody >");
-    out.println("<tr >");
-    out.println("<td>Supprimer l'annonce \"" + myOffer.getTitre() + "\"?</d>");
-    out.println("<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"location.href='removeOfferServlet?ID="
-			+ myOffer.getId() + "';\" value=\"Oui\" /></d>");
-    out.println("<td><input type=\"button\" class=\"btn waves-effect waves-light\" onclick=\"window.history.back();\" value=\"Non\" /></d>");
-    out.println("</tr >");
-    out.println("</tbody >");
-     out.println("</center >");%>
+	<center>
+		<tbody>
+		    <tr>
+		    	<td>Supprimer l'annonce <%=myOffer.getTitre()%> ?</td>
+			    <td>
+			    	<input type="button" class="btn waves-effect waves-light" onclick="location.href='removeOfferServlet?ID=<%=myOffer.getId()%>'" value="Oui" />
+			    </td>
+			    <td>
+			    	<input type="button" class="btn waves-effect waves-light" onclick="window.history.back();" value="Non" />
+			    </td>
+		    </tr>
+	    </tbody>
+    </center>
 
 </body>
 </body>

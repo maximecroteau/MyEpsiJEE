@@ -14,7 +14,7 @@
 <head>
 	<link rel="stylesheet" href="CSS/materialize.css" />
 	<link rel="stylesheet" href="CSS/custom.css" />
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Mes annonces</title>
 </head>
