@@ -97,6 +97,17 @@
 				<input value="<%=myOffer.getVendeur().getId()%>" type="text" id="content" name="MAIL" class="active" disabled> 
 				<label class="active" for="content">Mail du vendeur</label>
 			</div>
+			<% if(myOffer.getStatut() == Status.VENDU) { %>
+				<div class="input-field col s6 offset-s2">
+					<input value="<%=dateFormat.format(myOffer.getAchat())%>" type="text" id="achat" name="ACHAT" class="active" disabled> 
+					<label class="active" for="achat">Date d'achat</label>
+				</div>
+				<div class="input-field col s6 offset-s2">
+					<input value="<%=myOffer.getAcheteur().getNom()%> (<%=myOffer.getAcheteur().getId()%>)" type="text" id="acheteur" name="BUYER" class="active" disabled>
+					<label class="active" for="acheteur">Acheteur</label>
+				</div>
+			<% } %>
+			
 			<div class="input-field col s6 offset-s2">
 				<input value="<%=userID%>" type="hidden" id="user" name="USER">
 				<input value="<%=myOffer.getId()%>" type="hidden" id="offer"name="OFFER">
