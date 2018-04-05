@@ -63,7 +63,7 @@
 					<a class='waves-effect waves-light btn' href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>&EDIT=0"><i class="material-icons">visibility</i></a>
 					<% if(offer.getVendeur().getId().equals(user.getId())){ %>
 						<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>&EDIT=1"><i class="material-icons">edit</i></a>
-						<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>"><i class="material-icons">delete</i></a>
+						<a class="waves-effect waves-light btn modal-trigger" href="#modalDelete<%=offer.getId()%>"><i class="material-icons">delete</i></a>
 					<% } %>
 				</td>
 				<td>
@@ -76,6 +76,28 @@
 		</tbody>
 	</table>
 	</div>
+	
+	<% for (Offer offer : myOffers) { %>
+		 <!-- Modal Structure -->
+		  <div id="modalDelete<%=offer.getId()%>" class="modal">
+		    <div class="modal-content">
+		      <h4>Confirmer la suppression</h4>
+		      <p>Voulez-vous vraiment supprimer l'annonce <%=offer.getTitre()%> ? </p>
+		    </div>
+		    <div class="modal-footer">
+		      <a class="modal-action waves-effect waves-green btn-flat" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>"><i class="material-icons">Oui</i></a>
+		      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
+		    </div>
+		  </div>
+	  <% } %>
+	  
+	<script>
+		$(document).ready(function(){
+	    	$('.modal').modal();
+	  	});
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="JS/materialize.js"></script>
 	
 </body>
 </html>
