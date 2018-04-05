@@ -36,20 +36,21 @@
 	
 	<form action="/fr.epsi.myEpsi/editOfferServlet" id="editOffer" method="POST">
 		<div class="row mt50">
-
-			<% if(myOffer.getVendeur().getId().equals(userID)){ %>
-				<div class="col s3 offset-s8">
-					<% if (myOffer.getStatut() == Status.PUBLIE || myOffer.getStatut() == Status.TEMPORAIRE) { %>
-						<% if (edit != 1) { %>
-							<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=myOffer.getId()%>&USER=<%=userID%>&EDIT=1"><i class="material-icons">edit</i></a>
+			<% if(!(edit == 2)) { %>
+				<% if(myOffer.getVendeur().getId().equals(userID)){ %>
+					<div class="col s3 offset-s8">
+						<% if (myOffer.getStatut() == Status.PUBLIE || myOffer.getStatut() == Status.TEMPORAIRE) { %>
+							<% if (edit != 1) { %>
+								<a class="waves-effect waves-light btn" href="/fr.epsi.myEpsi/editOfferServlet?ID=<%=myOffer.getId()%>&USER=<%=userID%>&EDIT=1"><i class="material-icons">edit</i></a>
+							<% } %>
+						 	<a class="waves-effect waves-light btn modal-trigger" href="#modalDelete"><i class="material-icons">delete</i></a>
 						<% } %>
-					 	<a class="waves-effect waves-light btn modal-trigger" href="#modalDelete"><i class="material-icons">delete</i></a>
-					<% } %>
-				</div>
-			<% } else { %>
-				<div class="col s3 offset-s8">
-					<a class="waves-effect waves-light btn modal-trigger" href="#modalBuy"><i class="material-icons left">shopping_cart</i>Je l'achète !</a>
-				</div>
+					</div>
+				<% } else { %>
+					<div class="col s3 offset-s8">
+						<a class="waves-effect waves-light btn modal-trigger" href="#modalBuy"><i class="material-icons left">shopping_cart</i>Je l'achète !</a>
+					</div>
+				<% } %>
 			<% } %>
 			<div class="input-field col s6 offset-s2">
 				<input value="<%=myOffer.getTitre()%>" type="text" id="title" name="TITLE" class="active" <%=editable%>> 
