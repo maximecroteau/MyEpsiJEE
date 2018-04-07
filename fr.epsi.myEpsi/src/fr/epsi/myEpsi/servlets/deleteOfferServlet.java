@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import fr.epsi.myEpsi.beans.Offer;
 import fr.epsi.myEpsi.beans.logLevel;
 import fr.epsi.myEpsi.dao.hsqlImpl.OfferDao;
 
@@ -39,8 +40,11 @@ public class deleteOfferServlet extends HttpServlet {
 		}
 		
 		String offerId = request.getParameter("ID");
+		String userId = request.getParameter("USER");
+		
+		Offer offer = OfferDao.getOfferById(offerId);
 		String userID = OfferDao.getOfferById(offerId).getVendeur().getId();
-		OfferDao.deleteOffer(Integer.valueOf(offerId));
+		OfferDao.deleteOffer(offer,userId);
 
 		request.getRequestDispatcher("getOffersServlet?LOGIN=" + userID).forward(request, response);
 

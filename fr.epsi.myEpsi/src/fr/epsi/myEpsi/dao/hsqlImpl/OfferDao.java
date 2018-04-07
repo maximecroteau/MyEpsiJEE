@@ -149,21 +149,24 @@ public class OfferDao {
 		return offer;
 	}
 
-	public static void deleteOffer(int id) {
-		Connection con;
-		try {
-			con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
-					
-			PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET STATUS = ? WHERE ID = ?");
+	public static void deleteOffer(Offer offer, String userId) {
+		
+		if(offer.getVendeur().getId().equals(userId)) {
+			Connection con;
+			try {
+				con = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PWD);
+						
+				PreparedStatement psmt = con.prepareStatement("UPDATE ANNONCES SET STATUS = ? WHERE ID = ?");
 
-			psmt.setInt(1, 3);
-			psmt.setInt(2, id);
-			psmt.executeUpdate();
-			
-			logDelete(true, id, null);
-			con.close();
-		} catch (SQLException e) {
-			logDelete(false, id, e);
+				psmt.setInt(1, 3);
+				psmt.setInt(2, offer.getId());
+				psmt.executeUpdate();
+				
+				logDelete(true, offer.getId(), null);
+				con.close();
+			} catch (SQLException e) {
+				logDelete(false, offer.getId(), e);
+			}
 		}
 
 	}

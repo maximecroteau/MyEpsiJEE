@@ -98,7 +98,7 @@
 		      <p class="ml20">Voulez-vous vraiment supprimer l'annonce <%=offer.getTitre()%> ? </p>
 		    </div>
 		    <div class="modal-footer">
-		      <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>">Oui</a>
+		      <a class="modal-action waves-effect waves-light btn" href="/fr.epsi.myEpsi/deleteOfferServlet?ID=<%=offer.getId()%>&USER=<%=user.getId()%>">Oui</a>
 		      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
 		    </div>
 		  </div>
