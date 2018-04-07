@@ -12,6 +12,7 @@
 %>
 <html>
 <head>
+	<link rel="icon" href="IMG/epsilogo.ico" />
 	<link rel="stylesheet" href="CSS/materialize.css" />
 	<link rel="stylesheet" href="CSS/custom.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
