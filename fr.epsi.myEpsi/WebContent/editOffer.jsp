@@ -26,7 +26,7 @@
 
 	<nav>
 		<div class="nav-wrapper teal lighten-2">
-			<a href="#" class="brand-logo">MyEpsi Application</a>
+			<a href="/fr.epsi.myEpsi/getOffersServlet?LOGIN=<%= userID %>" class="brand-logo">MyEpsi Application</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="/fr.epsi.myEpsi/login.jsp"><b>Déconnexion</b></a></li>
 			</ul>
