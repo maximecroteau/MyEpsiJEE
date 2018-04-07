@@ -29,7 +29,7 @@
 			<a href="#" class="brand-logo">MyEpsi Application</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="/fr.epsi.myEpsi/newOffersServlet?ID=<%=user.getId()%>">Ajouter une annonce</a></li>
-				<li><a href="/fr.epsi.myEpsi/login.jsp">Déconnexion</a></li>
+				<li><a href="/fr.epsi.myEpsi/login.jsp"><b>Déconnexion</b></a></li>
 			</ul>
 		</div>
 	</nav>
